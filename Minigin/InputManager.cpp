@@ -14,7 +14,7 @@ bool dae::InputManager::ProcessInput()
 			return false;
 		}
 		if (e.type == SDL_KEYDOWN) {
-			std::cout << "E is pressed ! " << std::endl;
+			
 		}
 		if (e.type == SDL_MOUSEBUTTONDOWN) {
 			
