@@ -10,5 +10,5 @@ public:
 	~RenderComponent();
 
 	void Update() override;
-	void Render(const TextComponent &textComponent, TextureComponent& textureComponent);
+	void Render();
 };

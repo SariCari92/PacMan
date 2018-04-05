@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "TextureComponent.h"
+#include "Renderer.h"
 
 TextureComponent::TextureComponent()
 {
@@ -18,6 +19,13 @@ TextureComponent::~TextureComponent()
 void TextureComponent::Update()
 {
 
+}
+void TextureComponent::Render() const
+{
+	if (m_Texture)
+	{
+		Renderer::GetInstance().RenderTexture(*m_Texture, m_Position.x, m_Position.y);
+	}
 }
 void TextureComponent::SetPosition(Float3 newPos)
 {

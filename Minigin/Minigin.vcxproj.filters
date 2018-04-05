@@ -149,5 +149,8 @@
     <ClCompile Include="Structs.cpp">
       <Filter>Helper</Filter>
     </ClCompile>
+    <ClCompile Include="SceneObject.cpp">
+      <Filter>SceneGraph</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

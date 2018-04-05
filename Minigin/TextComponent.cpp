@@ -36,6 +36,13 @@ void TextComponent::Update()
 		m_Texture = std::make_shared<Texture2D>(texture);
 	}
 }
+void TextComponent::Render() const
+{
+	if (m_Texture != nullptr)
+	{
+		Renderer::GetInstance().RenderTexture(*m_Texture, m_Position.x, m_Position.y);
+	}
+}
 void TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
