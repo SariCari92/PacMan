@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "Structs.h"
 
+
 Float2 operator+(const Float2 lhs, const Float2 rhs)
 {
 	return Float2(lhs.x + rhs.x, lhs.y + rhs.y);

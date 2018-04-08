@@ -22,6 +22,9 @@
     <Filter Include="Helper">
       <UniqueIdentifier>{6cea9037-e0e2-4f28-8307-470352c6522d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{de12d386-888e-4840-bec0-b163adcb99ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">

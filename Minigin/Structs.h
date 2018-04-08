@@ -33,7 +33,8 @@ Float2 operator*(const Float2 lhs, const float rhs);
 //==============
 struct Float3
 {
-	Float3() = default;
+	Float3()
+		:x{}, y{} {};
 	Float3(float X, float Y, float Z)
 		:x{X}, y{Y}, z{Z}{}
 

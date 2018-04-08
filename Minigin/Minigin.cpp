@@ -10,6 +10,8 @@
 #include "TextObject.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "TextureComponent.h"
+#include "TextComponent.h"
 
 
 void dae::Minigin::Initialize()
@@ -42,19 +44,31 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto go = std::make_shared<GameObject>();
-	go->SetTexture("background.jpg");
-	scene.Add(go);
+	//auto go = std::make_shared<GameObject>();
+	//go->SetTexture("background.jpg");
+	//scene.Add(go);
 
-	go = std::make_shared<GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(216, 180);
-	scene.Add(go);
+	//go = std::make_shared<GameObject>();
+	//go->SetTexture("logo.png");
+	//go->SetPosition(216, 180);
+	//scene.Add(go);
 
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	to->SetPosition(80, 20);
-	scene.Add(to);
+	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	//auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
+	//to->SetPosition(80, 20);
+	//scene.Add(to);
+
+	std::shared_ptr<SceneObject> pSceneObject1 = std::make_shared<SceneObject>();
+	std::shared_ptr<TextureComponent> pTexture{std::make_shared<TextureComponent>("background.jpg")};
+	pSceneObject1->AddComponent(pTexture);
+
+	std::shared_ptr<Font> font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	std::shared_ptr<TextComponent> pText{ std::make_shared<TextComponent>("Programming 4 Assignment", font) };
+	pSceneObject1->AddComponent(pText);
+
+	scene.Add(pSceneObject1);
+
+	std::cout << "Position: " << pSceneObject1->GetComponent<TextComponent>()->GetPosition().x << std::endl;
 }
 
 void dae::Minigin::Cleanup()

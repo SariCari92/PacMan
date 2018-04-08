@@ -2,23 +2,25 @@
 #include "ComponentBase.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include <typeinfo>
 
 namespace dae
 {
 	class SceneObject
 	{
 	public:
-		SceneObject() = default;
+		SceneObject();
 		virtual ~SceneObject() = default;
 
-		virtual void Update() = 0;
-		virtual void Render() const = 0;
+		virtual void Update();
+		virtual void Render() const;
 		void AddComponent(std::shared_ptr<ComponentBase> component);
 		template<typename T> std::shared_ptr<T> GetComponent() const;
+		std::shared_ptr<TransformComponent> GetTransform() const;
 
 	protected:
 		std::vector<std::shared_ptr<ComponentBase>> m_Components;
-		TransformComponent m_TransformComponent;
+		std::shared_ptr<TransformComponent> m_pTransformComponent;
 
 	public:
 		SceneObject(const SceneObject& other) = delete;
@@ -33,7 +35,7 @@ std::shared_ptr<T> dae::SceneObject::GetComponent() const
 {
 	for (std::shared_ptr<ComponentBase> component : m_Components)
 	{
-		type_info typeId = typeid(T);
+		const type_info& typeId = typeid(T) ;
 		if (typeId == typeid(*component))
 		{
 			return std::static_pointer_cast<T>(component);

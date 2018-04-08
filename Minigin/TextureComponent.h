@@ -10,16 +10,16 @@ class TextureComponent : public ComponentBase
 {
 public:
 	TextureComponent();
-	TextureComponent(std::shared_ptr<Texture2D> texture);
+	TextureComponent(std::string texture);
 	~TextureComponent();
 
 	void Update() override;
 	void Render() const override;
 	void SetPosition(Float3 newPos);
 	Float3 GetPosition() const;
-	void SetTexture(std::shared_ptr<Texture2D> texture);
+	void SetTexture(std::string texture);
 	const std::shared_ptr<Texture2D> GetTexture() const;
 private:
-	std::shared_ptr<Texture2D> m_Texture;
+	std::shared_ptr<Texture2D> m_pTexture;
 	Float3 m_Position;
 };
