@@ -62,13 +62,15 @@ void dae::Minigin::LoadGame() const
 	std::shared_ptr<TextureComponent> pTexture{std::make_shared<TextureComponent>("background.jpg")};
 	pSceneObject1->AddComponent(pTexture);
 
+	std::shared_ptr<SceneObject> pSceneObject2 = std::make_shared<SceneObject>();
 	std::shared_ptr<Font> font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	std::shared_ptr<TextComponent> pText{ std::make_shared<TextComponent>("Programming 4 Assignment", font) };
-	pSceneObject1->AddComponent(pText);
+	pSceneObject2->AddComponent(pText);
+	pSceneObject1->AddChild(pSceneObject2);
 
 	scene.Add(pSceneObject1);
 
-	std::cout << "Position: " << pSceneObject1->GetComponent<TextComponent>()->GetPosition().x << std::endl;
+	pSceneObject1->GetTransform()->Translate(200.0f, 0.0f, 0.0f);
 }
 
 void dae::Minigin::Cleanup()

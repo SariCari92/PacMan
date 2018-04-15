@@ -15,11 +15,15 @@ public:
 
 	void Update() override;
 	void Render() const override;
-	void SetPosition(Float3 newPos);
-	Float3 GetPosition() const;
+	void SetWorldPosition(Float3 newPos);
+	Float3 GetWorldPosition() const;
+	void SetRelativePosition(Float3 newPos);
+	Float3 GetRelativePosition() const;
 	void SetTexture(std::string texture);
 	const std::shared_ptr<Texture2D> GetTexture() const;
+	void SetOwner(std::unique_ptr<dae::SceneObject> pOwner) override;
 private:
 	std::shared_ptr<Texture2D> m_pTexture;
-	Float3 m_Position;
+	Float3 m_WorldPosition;
+	Float3 m_RelativePosition;
 };

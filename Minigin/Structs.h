@@ -6,7 +6,8 @@
 
 struct Float2
 {
-	Float2() = default;
+	Float2()
+		:x{}, y{} {};
 	Float2(float X, float Y) :x{X}, y{Y}{}
 	void operator++()
 	{
@@ -17,6 +18,16 @@ struct Float2
 	{
 		--x;
 		--y;
+	}
+	void operator+=(const Float2 rhs)
+	{
+		x += rhs.x;
+		y += rhs.y;
+	}
+	void operator-=(const Float2 rhs)
+	{
+		x -= rhs.x;
+		y -= rhs.y;
 	}
 
 	float x, y;
@@ -34,7 +45,7 @@ Float2 operator*(const Float2 lhs, const float rhs);
 struct Float3
 {
 	Float3()
-		:x{}, y{} {};
+		:x{}, y{}, z{} {};
 	Float3(float X, float Y, float Z)
 		:x{X}, y{Y}, z{Z}{}
 
@@ -49,6 +60,18 @@ struct Float3
 		--x;
 		--y;
 		--z;
+	}
+	void operator+=(const Float3 rhs)
+	{
+		x += rhs.x;
+		y += rhs.y;
+		z += rhs.z;
+	}
+	void operator-=(const Float3 rhs)
+	{
+		x -= rhs.x;
+		y -= rhs.y;
+		z -= rhs.z;
 	}
 
 	float x, y, z;

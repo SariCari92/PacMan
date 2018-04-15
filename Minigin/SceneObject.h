@@ -14,15 +14,20 @@ namespace dae
 
 		virtual void Update();
 		virtual void Render() const;
-		void AddComponent(std::shared_ptr<ComponentBase> component);
+
+		void AddComponent(std::shared_ptr<ComponentBase> pComponent);
 		template<typename T> std::shared_ptr<T> GetComponent() const;
 		std::shared_ptr<TransformComponent> GetTransform() const;
+		void AddChild(std::shared_ptr<SceneObject> pChild);
+		std::vector<std::shared_ptr<SceneObject>>& GetChildren() ;
 
 	protected:
+		std::vector<std::shared_ptr<SceneObject>> m_Children;
 		std::vector<std::shared_ptr<ComponentBase>> m_Components;
 		std::shared_ptr<TransformComponent> m_pTransformComponent;
+		std::unique_ptr<SceneObject> m_pParent;
 
-	public:
+	private:
 		SceneObject(const SceneObject& other) = delete;
 		SceneObject(SceneObject&& other) = delete;
 		SceneObject& operator=(const SceneObject& other) = delete;

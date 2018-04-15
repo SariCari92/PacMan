@@ -45,16 +45,7 @@
     <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TextObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
@@ -72,9 +63,6 @@
     <ClInclude Include="Scene.h">
       <Filter>SceneGraph</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>SceneGraph</Filter>
-    </ClInclude>
     <ClInclude Include="ComponentBase.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -87,11 +75,11 @@
     <ClInclude Include="TextComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="TextureComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -107,16 +95,7 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TextObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
@@ -127,9 +106,6 @@
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>SceneGraph</Filter>
@@ -143,9 +119,6 @@
     <ClCompile Include="TextComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -154,6 +127,12 @@
     </ClCompile>
     <ClCompile Include="SceneObject.cpp">
       <Filter>SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentBase.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

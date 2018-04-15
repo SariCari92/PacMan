@@ -17,14 +17,20 @@ public:
 	void Update() override;
 	void Render() const override;
 	void SetText(const std::string& text);
-	void SetPosition(float x, float y);
-	Float3 GetPosition() const;
+
+	void SetWorldPosition(float x, float y, float z);
+	Float3 GetWorldPosition() const;
+	void SetRelativePosition(float x, float y, float z);
+	Float3 GetRelativePosition() const;
+
 	const std::shared_ptr<Texture2D>& GetTexture() const;
+	void SetOwner(std::unique_ptr<dae::SceneObject> pOwner) override;
 
 private:
 	bool m_NeedsUpdate;
 	std::string m_Text;
-	Float3 m_Position;
+	Float3 m_WorldPosition;
+	Float3 m_RelativePosition;
 	std::shared_ptr<Font> m_Font;
 	std::shared_ptr<Texture2D> m_Texture;
 };

@@ -2,13 +2,14 @@
 #include "TextComponent.h"
 #include "Font.h"
 #include "Renderer.h"
+#include "SceneObject.h"
 
 TextComponent::TextComponent()
 {
 
 }
 TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font)
-	:m_Text{text}, m_Font{font}
+	:m_Text{ text }, m_Font{ font }, m_RelativePosition{}, m_WorldPosition{}
 {
 
 }
@@ -35,28 +36,47 @@ void TextComponent::Update()
 		SDL_FreeSurface(surf);
 		m_Texture = std::make_shared<Texture2D>(texture);
 	}
+
+	if(m_pOwner) m_WorldPosition = m_pOwner->GetTransform()->GetWorldPosition() + m_RelativePosition;
+
 }
 void TextComponent::Render() const
 {
 	if (m_Texture != nullptr)
 	{
-		Renderer::GetInstance().RenderTexture(*m_Texture, m_Position.x, m_Position.y);
+		Renderer::GetInstance().RenderTexture(*m_Texture, m_WorldPosition.x, m_WorldPosition.y);
 	}
 }
 void TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 }
-void TextComponent::SetPosition(float x, float y)
+void TextComponent::SetWorldPosition(float x, float y, float z)
 {
-	m_Position.x = x;
-	m_Position.y = y;
+	m_WorldPosition.x = x;
+	m_WorldPosition.y = y;
+	m_WorldPosition.z = z;
 }
-Float3 TextComponent::GetPosition() const
+Float3 TextComponent::GetWorldPosition() const
 {
-	return m_Position;
+	return m_WorldPosition;
 }
 const std::shared_ptr<Texture2D>& TextComponent::GetTexture() const
 {
 	return m_Texture;
+}
+void TextComponent::SetRelativePosition(float x, float y, float z)
+{
+	m_RelativePosition.x += x;
+	m_RelativePosition.y += y;
+	m_RelativePosition.z += z;
+}
+Float3 TextComponent::GetRelativePosition() const
+{
+	return m_RelativePosition;
+}
+void TextComponent::SetOwner(std::unique_ptr<dae::SceneObject> pOwner)
+{
+	m_pOwner = std::move(pOwner);
+	m_WorldPosition += m_pOwner->GetTransform()->GetWorldPosition();
 }
