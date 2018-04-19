@@ -1,4 +1,4 @@
 - Active Scene Implementation
 - Only active scene will be drawn
-- Add Child Functionality
-- Hierarchy Transformation: Translation (also Rotation and Scaling when extra time -> Matrices?)
+- Add Child Functionality : Check
+- Hierarchy Transformation: Translation (also Rotation and Scaling when extra time -> Matrices?) : Check
