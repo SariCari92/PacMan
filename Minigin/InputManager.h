@@ -1,24 +1,37 @@
 #pragma once
-#include <XInput.h>
 #include "Singleton.h"
+#include "Controller.h"
+#include <map>
+#include <vector>
 
-namespace dae
+struct Input
 {
-	enum class ControllerButton
+	enum class PressedState
 	{
-		ButtonA,
-		ButtonB,
-		ButtonX,
-		ButtonY
+		ButtonPressed,
+		ButtonReleased,
+		ButtonDown
 	};
 
-	class InputManager final : public Singleton<InputManager>
-	{
-	public:
-		bool ProcessInput();
-		bool IsPressed(ControllerButton button) const;
-	private:
-		XINPUT_STATE currentState{};
-	};
+	Input() = default;
+	Input(PressedState state, WORD pressedButton)
+		:pressedState{state}, pressedButton{ pressedButton }{}
 
-}
+	PressedState pressedState;
+	WORD pressedButton;
+};
+
+class InputManager : public dae::Singleton<InputManager>
+{
+public:
+	InputManager();
+
+	bool ProcessInput();
+	void AddInput(const std::string &inputName, const Input &input);
+	bool IsInputTriggered(int ControllerId, std::string inputName);
+
+private:
+	std::vector<Controller> m_Controllers;
+	std::map<std::string, Input> m_Inputs;
+};
+

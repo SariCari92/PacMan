@@ -1,42 +1,47 @@
 #include "MiniginPCH.h"
 #include "InputManager.h"
+#include <iostream>
 #include <SDL.h>
 
-
-bool dae::InputManager::ProcessInput()
+InputManager::InputManager()
+	:m_Controllers{}, m_Inputs{}
 {
-	ZeroMemory(&currentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &currentState);
+	for (int idx{ 0 }; idx < 4; ++idx)
+	{
+		m_Controllers.push_back(Controller(idx));
+	}
+}
 
+bool InputManager::ProcessInput()
+{
 	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+	while (SDL_PollEvent(&e))
+	{
+		if (e.type == SDL_QUIT)
+		{
 			return false;
 		}
-		if (e.type == SDL_KEYDOWN) {
-			
-		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
-			
-		}
+	}
+
+	for (Controller &controller : m_Controllers)
+	{
+		controller.Update();
 	}
 
 	return true;
 }
 
-bool dae::InputManager::IsPressed(ControllerButton button) const
+void InputManager::AddInput(const std::string &inputName, const Input &input)
 {
-	switch (button)
-	{
-	case ControllerButton::ButtonA:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_A;
-	case ControllerButton::ButtonB:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_B;
-	case ControllerButton::ButtonX:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_X;
-	case ControllerButton::ButtonY:
-		return currentState.Gamepad.wButtons & XINPUT_GAMEPAD_Y;
-	default: return false;
-	}
+	m_Inputs[inputName] = input;
 }
 
+bool InputManager::IsInputTriggered(int ControllerId, std::string inputName)
+{
+	if (m_Controllers[ControllerId].GetXInputState().Gamepad.wButtons & m_Inputs[inputName].pressedButton)
+	{
+		return true;
+	}
+
+	return false;
+}
