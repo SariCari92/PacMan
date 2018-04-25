@@ -7,9 +7,10 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
-#include "TextObject.h"
-#include "GameObject.h"
 #include "Scene.h"
+#include "TextureComponent.h"
+#include "TextComponent.h"
+#include "SceneObject.h"
 
 
 void dae::Minigin::Initialize()
@@ -42,19 +43,35 @@ void dae::Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto go = std::make_shared<GameObject>();
-	go->SetTexture("background.jpg");
-	scene.Add(go);
+	//auto go = std::make_shared<GameObject>();
+	//go->SetTexture("background.jpg");
+	//scene.Add(go);
 
-	go = std::make_shared<GameObject>();
-	go->SetTexture("logo.png");
-	go->SetPosition(216, 180);
-	scene.Add(go);
+	//go = std::make_shared<GameObject>();
+	//go->SetTexture("logo.png");
+	//go->SetPosition(216, 180);
+	//scene.Add(go);
 
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	to->SetPosition(80, 20);
-	scene.Add(to);
+	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	//auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
+	//to->SetPosition(80, 20);
+	//scene.Add(to);
+
+	//========================================================================
+
+	std::shared_ptr<SceneObject> pSceneObject1 = std::make_shared<SceneObject>();
+	std::shared_ptr<TextureComponent> pTexture{std::make_shared<TextureComponent>("background.jpg")};
+	pSceneObject1->AddComponent(pTexture);
+
+	std::shared_ptr<SceneObject> pSceneObject2 = std::make_shared<SceneObject>();
+	std::shared_ptr<Font> font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	std::shared_ptr<TextComponent> pText{ std::make_shared<TextComponent>("Programming 4 Assignment", font) };
+	pSceneObject2->AddComponent(pText);
+	pSceneObject1->AddChild(pSceneObject2);
+
+	scene.Add(pSceneObject1);
+
+	pSceneObject1->GetTransform()->Translate(200.0f, 0.0f, 0.0f);
 }
 
 void dae::Minigin::Cleanup()
@@ -75,7 +92,7 @@ void dae::Minigin::Run()
 	LoadGame();
 
 	{
-		auto t = std::chrono::high_resolution_clock::now();
+		auto previousTime = std::chrono::high_resolution_clock::now();
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
@@ -83,13 +100,15 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
+			auto currentTime = std::chrono::high_resolution_clock::now();
+			std::chrono::duration<float> elapsed = currentTime - previousTime;
+			float deltaTime{ elapsed.count()};
 			doContinue = input.ProcessInput();
-
-			sceneManager.Update();
+			sceneManager.Update(deltaTime);
 			renderer.Render();
-
-			t += std::chrono::milliseconds(msPerFrame);
-			std::this_thread::sleep_until(t);
+			previousTime = currentTime;
+			//t += std::chrono::milliseconds(msPerFrame);//Use a game loop where fixed fps isn't used. You are making a game on pc,
+			//std::this_thread::sleep_until(t);// hence it is not needed to use fixed framerate
 		}
 	}
 

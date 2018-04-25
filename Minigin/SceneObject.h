@@ -1,17 +1,51 @@
 #pragma once
+#include "ComponentBase.h"
+#include "TransformComponent.h"
+#include "RenderComponent.h"
+#include <typeinfo>
+
 namespace dae
 {
 	class SceneObject
 	{
 	public:
-		virtual void Update() = 0;
-		virtual void Render() const = 0;
-
-		SceneObject() = default;
+		SceneObject();
 		virtual ~SceneObject() = default;
+
+		virtual void Update(float deltaTime);
+		virtual void Render() const;
+
+		void AddComponent(std::shared_ptr<ComponentBase> pComponent);
+		template<typename T> std::shared_ptr<T> GetComponent() const;
+		std::shared_ptr<TransformComponent> GetTransform() const;
+		void AddChild(std::shared_ptr<SceneObject> pChild);
+		std::vector<std::shared_ptr<SceneObject>>& GetChildren() ;
+
+	protected:
+		std::vector<std::shared_ptr<SceneObject>> m_Children;
+		std::vector<std::shared_ptr<ComponentBase>> m_Components;
+		std::shared_ptr<TransformComponent> m_pTransformComponent;
+		std::unique_ptr<SceneObject> m_pParent;
+
+	private:
 		SceneObject(const SceneObject& other) = delete;
 		SceneObject(SceneObject&& other) = delete;
 		SceneObject& operator=(const SceneObject& other) = delete;
 		SceneObject& operator=(SceneObject&& other) = delete;
 	};
+}
+
+template<typename T>
+std::shared_ptr<T> dae::SceneObject::GetComponent() const
+{
+	for (std::shared_ptr<ComponentBase> component : m_Components)
+	{
+		const type_info& typeId = typeid(T) ;
+		if (typeId == typeid(*component))
+		{
+			return std::static_pointer_cast<T>(component);
+		}
+	}
+	
+	return nullptr;
 }
