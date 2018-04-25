@@ -31,14 +31,14 @@ bool InputManager::ProcessInput()
 	return true;
 }
 
-void InputManager::AddInput(const std::string &inputName, const Input &input)
+void InputManager::AddInput(const std::string &inputName, const std::shared_ptr<Input> input)
 {
 	m_Inputs[inputName] = input;
 }
 
 bool InputManager::IsInputTriggered(int ControllerId, std::string inputName)
 {
-	if (m_Controllers[ControllerId].GetXInputState().Gamepad.wButtons & m_Inputs[inputName].pressedButton)
+	if (m_Controllers[ControllerId].GetXInputState().Gamepad.wButtons & m_Inputs[inputName]->pressedButton)
 	{
 		return true;
 	}

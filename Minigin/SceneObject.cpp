@@ -15,7 +15,7 @@ void dae::SceneObject::AddComponent(std::shared_ptr<ComponentBase> pComponent)
 	pComponent->SetOwner(std::unique_ptr<SceneObject>(this));
 }
 
-void dae::SceneObject::Update()
+void dae::SceneObject::Update(float deltaTime)
 {
 	for (std::shared_ptr<ComponentBase> component : m_Components)
 	{
@@ -23,7 +23,7 @@ void dae::SceneObject::Update()
 	}
 	for (std::shared_ptr<SceneObject> child : m_Children)
 	{
-		child->Update();
+		child->Update(deltaTime);
 	}
 }
 

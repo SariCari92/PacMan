@@ -12,7 +12,7 @@ namespace dae
 		SceneObject();
 		virtual ~SceneObject() = default;
 
-		virtual void Update();
+		virtual void Update(float deltaTime);
 		virtual void Render() const;
 
 		void AddComponent(std::shared_ptr<ComponentBase> pComponent);

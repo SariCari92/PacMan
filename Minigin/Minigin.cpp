@@ -7,11 +7,10 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
-#include "TextObject.h"
-#include "GameObject.h"
 #include "Scene.h"
 #include "TextureComponent.h"
 #include "TextComponent.h"
+#include "SceneObject.h"
 
 
 void dae::Minigin::Initialize()
@@ -58,6 +57,8 @@ void dae::Minigin::LoadGame() const
 	//to->SetPosition(80, 20);
 	//scene.Add(to);
 
+	//========================================================================
+
 	std::shared_ptr<SceneObject> pSceneObject1 = std::make_shared<SceneObject>();
 	std::shared_ptr<TextureComponent> pTexture{std::make_shared<TextureComponent>("background.jpg")};
 	pSceneObject1->AddComponent(pTexture);
@@ -91,7 +92,7 @@ void dae::Minigin::Run()
 	LoadGame();
 
 	{
-		auto t = std::chrono::high_resolution_clock::now();
+		auto previousTime = std::chrono::high_resolution_clock::now();
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
@@ -99,13 +100,15 @@ void dae::Minigin::Run()
 		bool doContinue = true;
 		while (doContinue)
 		{
+			auto currentTime = std::chrono::high_resolution_clock::now();
+			std::chrono::duration<float> elapsed = currentTime - previousTime;
+			float deltaTime{ elapsed.count()};
 			doContinue = input.ProcessInput();
-
-			sceneManager.Update();
+			sceneManager.Update(deltaTime);
 			renderer.Render();
-
-			t += std::chrono::milliseconds(msPerFrame);
-			std::this_thread::sleep_until(t);
+			previousTime = currentTime;
+			//t += std::chrono::milliseconds(msPerFrame);//Use a game loop where fixed fps isn't used. You are making a game on pc,
+			//std::this_thread::sleep_until(t);// hence it is not needed to use fixed framerate
 		}
 	}
 

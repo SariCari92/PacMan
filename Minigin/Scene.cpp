@@ -1,6 +1,6 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
-#include "GameObject.h"
+#include "SceneObject.h"
 
 unsigned int dae::Scene::idCounter = 0;
 
@@ -13,11 +13,11 @@ void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 	mObjects.push_back(object);
 }
 
-void dae::Scene::Update()
+void dae::Scene::Update(float deltaTime)
 {
 	for(auto gameObject : mObjects)
 	{
-		gameObject->Update();
+		gameObject->Update(deltaTime);
 	}
 }
 
