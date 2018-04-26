@@ -10,7 +10,7 @@ namespace dae
 	{
 	public:
 		SceneObject();
-		virtual ~SceneObject() = default;
+		virtual ~SceneObject();
 
 		virtual void Update(float deltaTime);
 		virtual void Render() const;

@@ -72,6 +72,11 @@ void dae::Minigin::LoadGame() const
 	scene.Add(pSceneObject1);
 
 	pSceneObject1->GetTransform()->Translate(200.0f, 0.0f, 0.0f);
+
+	auto& inputManager = InputManager::GetInstance();
+	inputManager.AddInput("PressA", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonPressed, XINPUT_GAMEPAD_A)));
+
+
 }
 
 void dae::Minigin::Cleanup()
@@ -102,13 +107,13 @@ void dae::Minigin::Run()
 		{
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			std::chrono::duration<float> elapsed = currentTime - previousTime;
-			float deltaTime{ elapsed.count()};
+			float deltaTime{ std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count() / 1000.0f }; // deltaTime in Seconds
+
 			doContinue = input.ProcessInput();
 			sceneManager.Update(deltaTime);
 			renderer.Render();
+
 			previousTime = currentTime;
-			//t += std::chrono::milliseconds(msPerFrame);//Use a game loop where fixed fps isn't used. You are making a game on pc,
-			//std::this_thread::sleep_until(t);// hence it is not needed to use fixed framerate
 		}
 	}
 

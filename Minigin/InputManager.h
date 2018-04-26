@@ -13,12 +13,11 @@ struct Input
 		ButtonDown
 	};
 
-	Input() = default;
-	Input(PressedState state, WORD pressedButton)
-		:pressedState{state}, pressedButton{ pressedButton }{}
+	Input();
+	Input(PressedState state, int pressedButton);
 
 	PressedState pressedState;
-	WORD pressedButton;
+	int pressedButton;
 };
 
 class InputManager : public dae::Singleton<InputManager>

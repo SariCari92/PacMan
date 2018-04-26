@@ -9,6 +9,11 @@ dae::SceneObject::SceneObject()
 	m_pTransformComponent->SetOwner(owner);
 }
 
+dae::SceneObject::~SceneObject()
+{
+	std::cout << "Destructor called " << std::endl;
+}
+
 void dae::SceneObject::AddComponent(std::shared_ptr<ComponentBase> pComponent)
 {
 	m_Components.push_back(pComponent);
