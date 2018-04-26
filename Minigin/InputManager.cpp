@@ -3,6 +3,16 @@
 #include <iostream>
 #include <SDL.h>
 
+Input::Input()
+{
+
+}
+Input::Input(PressedState state, int pressedButton)
+	:pressedState{ state }, pressedButton{ pressedButton } 
+{
+
+}
+
 InputManager::InputManager()
 	:m_Controllers{}, m_Inputs{}
 {
@@ -38,10 +48,20 @@ void InputManager::AddInput(const std::string &inputName, const std::shared_ptr<
 
 bool InputManager::IsInputTriggered(int ControllerId, std::string inputName)
 {
-	if (m_Controllers[ControllerId].GetXInputState().Gamepad.wButtons & m_Inputs[inputName]->pressedButton)
+	switch (m_Inputs[inputName]->pressedState)
 	{
-		return true;
+	case Input::PressedState::ButtonDown:
+		break;
+	case Input::PressedState::ButtonPressed:
+		if (m_Controllers[ControllerId].GetXInputState().Gamepad.wButtons & m_Inputs[inputName]->pressedButton)
+		{
+			return true;
+		}
+		break;
+	case Input::PressedState::ButtonReleased:
+		break;
 	}
+
 
 	return false;
 }

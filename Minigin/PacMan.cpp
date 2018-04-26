@@ -13,11 +13,11 @@ PacMan::~PacMan()
 }
 void PacMan::Initialize()
 {
-	auto &inputManager = InputManager::GetInstance();
-	inputManager.AddInput("MoveLeft", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_LEFT)));
-	inputManager.AddInput("MoveRight", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_RIGHT)));
-	inputManager.AddInput("MoveUp", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_UP)));
-	inputManager.AddInput("MoveDown", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_DOWN)));
+	//auto &inputManager = InputManager::GetInstance();
+	//inputManager.AddInput("MoveLeft", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_LEFT)));
+	//inputManager.AddInput("MoveRight", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_RIGHT)));
+	//inputManager.AddInput("MoveUp", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_UP)));
+	//inputManager.AddInput("MoveDown", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonDown, XINPUT_GAMEPAD_DPAD_DOWN)));
 }
 void PacMan::ProcessInput()
 {
