@@ -1,8 +1,13 @@
 #include "MiniginPCH.h"
 #include "Controller.h"
+#include "Command.h"
 
 Controller::Controller(int idx)
 	:m_ControllerID{ idx }
+	, m_pGamepadUp{new MoveUpCommand()}
+	, m_pGamepadDown{new MoveDownCommand()}
+	, m_pGamepadLeft{new MoveLeftCommand()}
+	, m_pGamepadRight{new MoveRightCommand()}
 {
 	ZeroMemory(&m_InputState, sizeof(XINPUT_STATE));
 }

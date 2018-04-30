@@ -2,29 +2,28 @@
 #include "SceneObject.h"
 
 dae::SceneObject::SceneObject()
-	:m_pTransformComponent{std::make_shared<TransformComponent>()}
+	:m_pTransformComponent{ std::make_shared<TransformComponent>()}
 	,m_pParent{nullptr}
 {
-	std::unique_ptr<SceneObject> owner{ this };
-	m_pTransformComponent->SetOwner(owner);
+	m_pTransformComponent->SetOwner(this);
 }
 
 dae::SceneObject::~SceneObject()
 {
-	std::cout << "Destructor called " << std::endl;
+	std::cout << "SceneObject Destructor Called!" << std::endl;
 }
 
 void dae::SceneObject::AddComponent(std::shared_ptr<ComponentBase> pComponent)
 {
 	m_Components.push_back(pComponent);
-	pComponent->SetOwner(std::unique_ptr<SceneObject>(this));
+	pComponent->SetOwner(this);
 }
 
 void dae::SceneObject::Update(float deltaTime)
 {
 	for (std::shared_ptr<ComponentBase> component : m_Components)
 	{
-		component->Update();
+		component->Update(deltaTime);
 	}
 	for (std::shared_ptr<SceneObject> child : m_Children)
 	{
@@ -52,12 +51,12 @@ std::shared_ptr<TransformComponent> dae::SceneObject::GetTransform() const
 void dae::SceneObject::AddChild(std::shared_ptr<SceneObject> pChild)
 {
 	m_Children.push_back(pChild);
-	pChild->m_pParent = std::unique_ptr<SceneObject>(this);
+	pChild->m_pParent = std::shared_ptr<SceneObject>(this);
 	auto parentPosition = m_pTransformComponent->GetWorldPosition();
 	pChild->GetTransform()->Translate(parentPosition.x, parentPosition.y, parentPosition.z);
 }
 
-std::vector<std::shared_ptr<SceneObject>>& dae::SceneObject::GetChildren() 
+std::vector<std::shared_ptr<dae::SceneObject>>& dae::SceneObject::GetChildren() 
 {
 	return m_Children;
 }

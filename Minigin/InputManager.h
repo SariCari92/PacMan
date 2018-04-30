@@ -3,6 +3,7 @@
 #include "Controller.h"
 #include <map>
 #include <vector>
+#include "Command.h"
 
 struct Input
 {
@@ -28,8 +29,15 @@ public:
 	bool ProcessInput();
 	void AddInput(const std::string &inputName, const std::shared_ptr<Input> input);
 	bool IsInputTriggered(int ControllerId, std::string inputName);
+	std::shared_ptr<Command> GetCommand(int controllerId) const;
 
 private:
+	//Commands
+	std::shared_ptr<Command> m_pGamepadUp;
+	std::shared_ptr<Command> m_pGamepadDown;
+	std::shared_ptr<Command> m_pGamepadLeft;
+	std::shared_ptr<Command> m_pGamepadRight;
+
 	std::vector<Controller> m_Controllers;
 	std::map<std::string, std::shared_ptr<Input>> m_Inputs;
 };

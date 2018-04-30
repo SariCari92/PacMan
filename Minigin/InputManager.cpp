@@ -62,6 +62,17 @@ bool InputManager::IsInputTriggered(int ControllerId, std::string inputName)
 		break;
 	}
 
-
 	return false;
+}
+
+std::shared_ptr<Command> InputManager::GetCommand(int controllerId) const
+{
+	std::shared_ptr<Command> command;
+	const Controller &controller{ m_Controllers[controllerId] };
+	if (controller.GetXInputState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) return controller.m_pGamepadUp;
+	if (controller.GetXInputState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) return controller.m_pGamepadDown;
+	if (controller.GetXInputState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) return controller.m_pGamepadLeft;
+	if (controller.GetXInputState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) return controller.m_pGamepadRight;
+
+	return nullptr;
 }

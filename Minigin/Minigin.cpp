@@ -11,6 +11,7 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "SceneObject.h"
+#include "Level1.h"
 
 
 void dae::Minigin::Initialize()
@@ -41,7 +42,10 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	std::shared_ptr<dae::Scene> scene = std::shared_ptr<dae::Scene>(new Level1);
+	dae::SceneManager::GetInstance().AddScene(scene);
+	dae::SceneManager::GetInstance().SetActiveScene(scene);
+
 
 	//auto go = std::make_shared<GameObject>();
 	//go->SetTexture("background.jpg");
@@ -60,21 +64,21 @@ void dae::Minigin::LoadGame() const
 	//========================================================================
 
 	std::shared_ptr<SceneObject> pSceneObject1 = std::make_shared<SceneObject>();
-	std::shared_ptr<TextureComponent> pTexture{std::make_shared<TextureComponent>("background.jpg")};
-	pSceneObject1->AddComponent(pTexture);
+	//std::shared_ptr<TextureComponent> pTexture{std::make_shared<TextureComponent>("background.jpg")};
+	//pSceneObject1->AddComponent(pTexture);
 
-	std::shared_ptr<SceneObject> pSceneObject2 = std::make_shared<SceneObject>();
-	std::shared_ptr<Font> font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	std::shared_ptr<TextComponent> pText{ std::make_shared<TextComponent>("Programming 4 Assignment", font) };
-	pSceneObject2->AddComponent(pText);
-	pSceneObject1->AddChild(pSceneObject2);
+	//std::shared_ptr<SceneObject> pSceneObject2 = std::make_shared<SceneObject>();
+	//std::shared_ptr<Font> font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	//std::shared_ptr<TextComponent> pText{ std::make_shared<TextComponent>("Programming 4 Assignment", font) };
+	//pSceneObject2->AddComponent(pText);
+	//pSceneObject1->AddChild(pSceneObject2);
 
-	scene.Add(pSceneObject1);
+	
 
-	pSceneObject1->GetTransform()->Translate(200.0f, 0.0f, 0.0f);
+	//pSceneObject1->GetTransform()->Translate(200.0f, 0.0f, 0.0f);
 
-	auto& inputManager = InputManager::GetInstance();
-	inputManager.AddInput("PressA", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonPressed, XINPUT_GAMEPAD_A)));
+	//auto& inputManager = InputManager::GetInstance();
+	//inputManager.AddInput("PressA", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonPressed, XINPUT_GAMEPAD_A)));
 
 
 }

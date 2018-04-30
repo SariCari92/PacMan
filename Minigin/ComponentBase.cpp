@@ -10,12 +10,12 @@ ComponentBase::ComponentBase()
 
 ComponentBase::~ComponentBase()
 {
-
+	std::cout << "BaseComponent Destructor Called!" << std::endl;
 }
 
 
-void ComponentBase::SetOwner(std::unique_ptr<dae::SceneObject> pOwner)
+void ComponentBase::SetOwner(dae::SceneObject *pOwner)
 {
-	m_pOwner = std::move(pOwner);
+	m_pOwner = pOwner;
 }
 

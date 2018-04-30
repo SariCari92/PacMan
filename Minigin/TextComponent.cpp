@@ -15,10 +15,10 @@ TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font
 }
 TextComponent::~TextComponent()
 {
-
+	std::cout << "TextComponent Destructor Called!" << std::endl;
 }
 
-void TextComponent::Update() 
+void TextComponent::Update(float deltaTime)
 {
 	if (m_NeedsUpdate)
 	{
@@ -51,32 +51,7 @@ void TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 }
-void TextComponent::SetWorldPosition(float x, float y, float z)
-{
-	m_WorldPosition.x = x;
-	m_WorldPosition.y = y;
-	m_WorldPosition.z = z;
-}
-Float3 TextComponent::GetWorldPosition() const
-{
-	return m_WorldPosition;
-}
 const std::shared_ptr<Texture2D>& TextComponent::GetTexture() const
 {
 	return m_Texture;
-}
-void TextComponent::SetRelativePosition(float x, float y, float z)
-{
-	m_RelativePosition.x += x;
-	m_RelativePosition.y += y;
-	m_RelativePosition.z += z;
-}
-Float3 TextComponent::GetRelativePosition() const
-{
-	return m_RelativePosition;
-}
-void TextComponent::SetOwner(std::unique_ptr<dae::SceneObject> pOwner)
-{
-	m_pOwner = std::move(pOwner);
-	m_WorldPosition += m_pOwner->GetTransform()->GetWorldPosition();
 }

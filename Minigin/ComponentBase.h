@@ -10,10 +10,10 @@ public:
 	ComponentBase();
 	virtual ~ComponentBase();
 
-	virtual void Update() = 0;
+	virtual void Update(float deltaTime) = 0;
 	virtual void Render() const = 0;
-	virtual void SetOwner(std::unique_ptr<dae::SceneObject> pOwner);
+	virtual void SetOwner(dae::SceneObject *pOwner);
 
 protected:
-	std::unique_ptr<dae::SceneObject> m_pOwner;
+	dae::SceneObject *m_pOwner;
 };

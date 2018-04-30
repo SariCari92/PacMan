@@ -1,7 +1,6 @@
 #pragma once
 #include "ComponentBase.h"
 #include "TransformComponent.h"
-#include "RenderComponent.h"
 #include <typeinfo>
 
 namespace dae
@@ -25,7 +24,7 @@ namespace dae
 		std::vector<std::shared_ptr<SceneObject>> m_Children;
 		std::vector<std::shared_ptr<ComponentBase>> m_Components;
 		std::shared_ptr<TransformComponent> m_pTransformComponent;
-		std::unique_ptr<SceneObject> m_pParent;
+		std::shared_ptr<SceneObject> m_pParent;
 
 	private:
 		SceneObject(const SceneObject& other) = delete;
