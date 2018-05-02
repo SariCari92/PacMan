@@ -27,4 +27,6 @@ private:
 	std::shared_ptr<Command> m_pGamepadLeft;
 	std::shared_ptr<Command> m_pGamepadRight;
 
+	void SetGamepadUpCommand(std::shared_ptr<Command> pCommand);
+
 };

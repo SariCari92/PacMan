@@ -8,13 +8,13 @@ class InputComponent : public ComponentBase
 {
 public:
 	InputComponent();
-	InputComponent(int idx);
+	InputComponent(int controllerId);
 	~InputComponent();
 
 	void Update(float deltaTime) override;
 	void Render() const override;
 	void SetControllerId(int idx);
-private:
+protected:
 	std::shared_ptr<Command> GetCommand() const;
-	int m_pControllerId;
+	int m_ControllerId;
 };

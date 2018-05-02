@@ -73,8 +73,6 @@ void dae::Minigin::LoadGame() const
 	//pSceneObject2->AddComponent(pText);
 	//pSceneObject1->AddChild(pSceneObject2);
 
-	
-
 	//pSceneObject1->GetTransform()->Translate(200.0f, 0.0f, 0.0f);
 
 	//auto& inputManager = InputManager::GetInstance();

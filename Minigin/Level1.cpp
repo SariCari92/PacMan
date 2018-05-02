@@ -3,6 +3,8 @@
 #include "SceneObject.h"
 #include "TextureComponent.h"
 #include "InputComponent.h"
+#include "InputComponentPacman.h"
+#include "MovementComponent.h"
 
 Level1::Level1()
 	:dae::Scene("Level1")
@@ -22,5 +24,7 @@ void Level1::InitializePacMan()
 	Add(m_pPacMan);
 	m_pPacMan->GetTransform()->Translate(50.0f, 10.0f, 0.0f);
 	//Input
-	m_pPacMan->AddComponent(std::make_shared<InputComponent>(0));
+	m_pPacMan->AddComponent(std::shared_ptr<InputComponent>(new InputComponentPacMan(0)));
+	//MovementComponent
+	m_pPacMan->AddComponent(std::make_shared<MovementComponent>());
 }

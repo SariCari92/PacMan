@@ -1,13 +1,13 @@
 #include "MiniginPCH.h"
 #include "Controller.h"
-#include "Command.h"
+#include "Commands.h"
 
 Controller::Controller(int idx)
 	:m_ControllerID{ idx }
-	, m_pGamepadUp{new MoveUpCommand()}
-	, m_pGamepadDown{new MoveDownCommand()}
-	, m_pGamepadLeft{new MoveLeftCommand()}
-	, m_pGamepadRight{new MoveRightCommand()}
+	, m_pGamepadUp{nullptr}
+	, m_pGamepadDown{ nullptr }
+	, m_pGamepadLeft{ nullptr }
+	, m_pGamepadRight{ nullptr }
 {
 	ZeroMemory(&m_InputState, sizeof(XINPUT_STATE));
 }
@@ -34,4 +34,9 @@ bool Controller::GetIsActive() const
 XINPUT_STATE Controller::GetXInputState() const
 {
 	return m_InputState;
+}
+
+void Controller::SetGamepadUpCommand(std::shared_ptr<Command> pCommand)
+{
+	
 }

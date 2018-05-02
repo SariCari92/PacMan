@@ -1,14 +1,15 @@
 #include "MiniginPCH.h"
 #include "InputComponent.h"
 #include "InputManager.h"
-#include "Command.h"
+#include "BaseCommand.h"
+#include "Commands.h"
 
 InputComponent::InputComponent()
 {
 
 }
-InputComponent::InputComponent(int idx)
-	:m_pControllerId{idx}
+InputComponent::InputComponent(int controllerId)
+	:m_ControllerId{ controllerId }
 {
 
 }
@@ -35,10 +36,10 @@ void InputComponent::Render() const
 
 void InputComponent::SetControllerId(int idx)
 {
-	m_pControllerId = idx;
+	m_ControllerId = idx;
 }
 
 std::shared_ptr<Command> InputComponent::GetCommand() const
 {
-	return InputManager::GetInstance().GetCommand(m_pControllerId);
+	return InputManager::GetInstance().GetCommand(m_ControllerId);
 }

@@ -3,18 +3,9 @@
 #include <iostream>
 #include <SDL.h>
 
-Input::Input()
-{
-
-}
-Input::Input(PressedState state, int pressedButton)
-	:pressedState{ state }, pressedButton{ pressedButton } 
-{
-
-}
 
 InputManager::InputManager()
-	:m_Controllers{}, m_Inputs{}
+	:m_Controllers{}
 {
 	for (int idx{ 0 }; idx < 4; ++idx)
 	{
@@ -41,33 +32,9 @@ bool InputManager::ProcessInput()
 	return true;
 }
 
-void InputManager::AddInput(const std::string &inputName, const std::shared_ptr<Input> input)
-{
-	m_Inputs[inputName] = input;
-}
-
-bool InputManager::IsInputTriggered(int ControllerId, std::string inputName)
-{
-	switch (m_Inputs[inputName]->pressedState)
-	{
-	case Input::PressedState::ButtonDown:
-		break;
-	case Input::PressedState::ButtonPressed:
-		if (m_Controllers[ControllerId].GetXInputState().Gamepad.wButtons & m_Inputs[inputName]->pressedButton)
-		{
-			return true;
-		}
-		break;
-	case Input::PressedState::ButtonReleased:
-		break;
-	}
-
-	return false;
-}
 
 std::shared_ptr<Command> InputManager::GetCommand(int controllerId) const
 {
-	std::shared_ptr<Command> command;
 	const Controller &controller{ m_Controllers[controllerId] };
 	if (controller.GetXInputState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) return controller.m_pGamepadUp;
 	if (controller.GetXInputState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) return controller.m_pGamepadDown;
@@ -75,4 +42,21 @@ std::shared_ptr<Command> InputManager::GetCommand(int controllerId) const
 	if (controller.GetXInputState().Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) return controller.m_pGamepadRight;
 
 	return nullptr;
+}
+
+void InputManager::SetGamepadUpCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand)
+{
+	m_Controllers[controllerId].m_pGamepadUp = pConcreteCommand;
+}
+void InputManager::SetGamepadDownCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand)
+{
+	m_Controllers[controllerId].m_pGamepadDown = pConcreteCommand;
+}
+void InputManager::SetGamepadLeftCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand)
+{
+	m_Controllers[controllerId].m_pGamepadLeft = pConcreteCommand;
+}
+void InputManager::SetGamepadRightCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand)
+{
+	m_Controllers[controllerId].m_pGamepadRight = pConcreteCommand;
 }
