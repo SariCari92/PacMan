@@ -7,13 +7,13 @@ void dae::SceneManager::Update(float deltaTime)
 {
 	for(auto scene : m_Scenes)
 	{
-		scene->Update(deltaTime);
+		scene->BaseUpdate(deltaTime);
 	}
 }
 
 void dae::SceneManager::Render()
 {
-	if (m_pActiveScene) m_pActiveScene->Render();
+	if (m_pActiveScene) m_pActiveScene->BaseRender();
 }
 
 void dae::SceneManager::AddScene(std::shared_ptr<Scene> pScene)

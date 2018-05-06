@@ -19,12 +19,13 @@ namespace dae
 		std::shared_ptr<TransformComponent> GetTransform() const;
 		void AddChild(std::shared_ptr<SceneObject> pChild);
 		std::vector<std::shared_ptr<SceneObject>>& GetChildren() ;
+		SceneObject* GetParent() const;
 
 	protected:
 		std::vector<std::shared_ptr<SceneObject>> m_Children;
 		std::vector<std::shared_ptr<ComponentBase>> m_Components;
 		std::shared_ptr<TransformComponent> m_pTransformComponent;
-		std::shared_ptr<SceneObject> m_pParent;
+		SceneObject *m_pParent;
 
 	private:
 		SceneObject(const SceneObject& other) = delete;

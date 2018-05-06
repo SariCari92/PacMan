@@ -5,9 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Helper">
-      <UniqueIdentifier>{6cea9037-e0e2-4f28-8307-470352c6522d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{1d544530-0d50-41cd-8df7-4627c5f3c8fd}</UniqueIdentifier>
     </Filter>
@@ -25,6 +22,12 @@
     </Filter>
     <Filter Include="Engine\Components">
       <UniqueIdentifier>{1f5ba9d2-b3ed-495f-8e64-a75eaf7b74ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Helper">
+      <UniqueIdentifier>{6cea9037-e0e2-4f28-8307-470352c6522d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Main">
+      <UniqueIdentifier>{75385e52-2fdd-49dc-ba02-622b60c4c540}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,46 +47,13 @@
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="Structs.h">
-      <Filter>Helper</Filter>
+      <Filter>Engine\Helper</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="TextureComponent.h">
       <Filter>Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Minigin.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="MiniginPCH.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Engine</Filter>
     </ClInclude>
     <ClInclude Include="Level1.h">
       <Filter>Game\Levels</Filter>
@@ -94,9 +64,6 @@
     <ClInclude Include="Commands.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="BaseCommand.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="PacManState.h">
       <Filter>Game\PacMan</Filter>
     </ClInclude>
@@ -104,6 +71,48 @@
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="InputComponentPacman.h">
+      <Filter>Game\PacMan</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCommand.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Minigin.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniginPCH.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>Engine\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsComponent.h">
       <Filter>Game\PacMan</Filter>
     </ClInclude>
   </ItemGroup>
@@ -124,43 +133,13 @@
       <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="Structs.cpp">
-      <Filter>Helper</Filter>
+      <Filter>Engine\Helper</Filter>
     </ClCompile>
     <ClCompile Include="SceneObject.cpp">
       <Filter>Engine\SceneGraph</Filter>
     </ClCompile>
     <ClCompile Include="ComponentBase.cpp">
       <Filter>Engine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Minigin.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="MiniginPCH.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Level1.cpp">
       <Filter>Game\Levels</Filter>
@@ -171,13 +150,49 @@
     <ClCompile Include="Commands.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="BaseCommand.cpp">
-      <Filter>Engine</Filter>
-    </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="InputComponentPacman.cpp">
+      <Filter>Game\PacMan</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCommand.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Minigin.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniginPCH.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Engine\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
+      <Filter>Engine\Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsComponent.cpp">
       <Filter>Game\PacMan</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,14 +17,15 @@ public:
 	void Update(float deltaTime) override;
 	void Render() const override;
 	void SetText(const std::string& text);
+	void SetPivot(glm::vec3 newPivot);
 
 	const std::shared_ptr<Texture2D>& GetTexture() const;
 
 private:
 	bool m_NeedsUpdate;
 	std::string m_Text;
-	glm::vec3 m_WorldPosition;
-	glm::vec3 m_RelativePosition;
+	glm::vec3 m_TextureWorldPosition;
+	glm::vec3 m_TexturePivot;
 	std::shared_ptr<Font> m_Font;
 	std::shared_ptr<Texture2D> m_Texture;
 };

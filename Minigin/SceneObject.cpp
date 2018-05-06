@@ -51,7 +51,7 @@ std::shared_ptr<TransformComponent> dae::SceneObject::GetTransform() const
 void dae::SceneObject::AddChild(std::shared_ptr<SceneObject> pChild)
 {
 	m_Children.push_back(pChild);
-	pChild->m_pParent = std::shared_ptr<SceneObject>(this);
+	pChild->m_pParent = this;
 	auto parentPosition = m_pTransformComponent->GetWorldPosition();
 	pChild->GetTransform()->Translate(parentPosition.x, parentPosition.y, parentPosition.z);
 }
@@ -61,3 +61,7 @@ std::vector<std::shared_ptr<dae::SceneObject>>& dae::SceneObject::GetChildren()
 	return m_Children;
 }
 
+dae::SceneObject* dae::SceneObject::GetParent() const
+{
+	return m_pParent;
+}

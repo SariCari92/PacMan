@@ -19,10 +19,9 @@ public:
 	void SetRelativePosition(const glm::vec3 newPos);
 	glm::vec3 GetRelativePosition() const;
 	void Translate(float x, float y, float z);
+	void Translate(glm::vec3 translation);
 	void SetOwner(dae::SceneObject *pOwner);
 private:
-	//Float3 m_RelativePosition;
-	//Float3 m_WorldPosition;
 
 	glm::vec3 m_RelativePosition;
 	glm::vec3 m_WorldPosition;

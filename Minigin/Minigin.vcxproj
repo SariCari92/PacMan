@@ -195,6 +195,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Commands.h" />
     <ClInclude Include="ComponentBase.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="InputComponent.h" />
     <ClInclude Include="InputComponentPacman.h" />
@@ -205,6 +206,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="PacManState.h" />
+    <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -223,6 +225,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="ComponentBase.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="InputComponent.cpp" />
     <ClCompile Include="InputComponentPacman.cpp" />
@@ -239,6 +242,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MiniginPCH.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp" />
+    <ClCompile Include="PhysicsComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

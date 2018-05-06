@@ -13,6 +13,8 @@
 #include "SceneObject.h"
 #include "Level1.h"
 
+int dae::Minigin::m_WindowWidth = 600;
+int dae::Minigin::m_WindowHeight = 600;
 
 void dae::Minigin::Initialize()
 {
@@ -22,11 +24,11 @@ void dae::Minigin::Initialize()
 	}
 
 	window = SDL_CreateWindow(
-		"Programming 4 assignment",
+		"Programming 4 - End Assignment: PacMan",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		640,
-		480,
+		m_WindowWidth,
+		m_WindowHeight,
 		SDL_WINDOW_OPENGL
 	);
 	if (window == nullptr) 
@@ -121,3 +123,12 @@ void dae::Minigin::Run()
 
 	Cleanup();
 }
+int dae::Minigin::GetSDL_WindowWidth()
+{
+	return m_WindowWidth;
+}
+int dae::Minigin::GetSDL_WindowHeight()
+{
+	return m_WindowHeight;
+}
+

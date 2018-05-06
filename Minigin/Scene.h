@@ -11,8 +11,8 @@ namespace dae
 		~Scene();
 
 		void Add(const std::shared_ptr<SceneObject>& object);
-		void Update(float deltaTime);
-		void Render() const;
+		void BaseUpdate(float deltaTime);
+		void BaseRender() const;
 
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
@@ -20,7 +20,8 @@ namespace dae
 		Scene& operator=(Scene&& other) = delete;
 
 	protected: 
-		
+		virtual void Update(float deltaTime);
+		virtual void Render() const;
 
 		std::string mName{};
 		std::vector < std::shared_ptr<SceneObject>> mObjects{};

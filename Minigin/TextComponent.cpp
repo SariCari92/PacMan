@@ -9,7 +9,7 @@ TextComponent::TextComponent()
 
 }
 TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font)
-	:m_Text{ text }, m_Font{ font }, m_RelativePosition{}, m_WorldPosition{}
+	:m_Text{ text }, m_Font{ font }, m_TexturePivot{}, m_TextureWorldPosition{}
 {
 
 }
@@ -20,6 +20,8 @@ TextComponent::~TextComponent()
 
 void TextComponent::Update(float deltaTime)
 {
+	if (m_pOwner) m_TextureWorldPosition = m_pOwner->GetTransform()->GetWorldPosition() + m_TexturePivot;
+
 	if (m_NeedsUpdate)
 	{
 		const SDL_Color color = { 255,255,255 }; // only white text is supported now
@@ -37,14 +39,14 @@ void TextComponent::Update(float deltaTime)
 		m_Texture = std::make_shared<Texture2D>(texture);
 	}
 
-	if(m_pOwner) m_WorldPosition = m_pOwner->GetTransform()->GetWorldPosition() + m_RelativePosition;
+	
 
 }
 void TextComponent::Render() const
 {
 	if (m_Texture != nullptr)
 	{
-		Renderer::GetInstance().RenderTexture(*m_Texture, m_WorldPosition.x, m_WorldPosition.y);
+		Renderer::GetInstance().RenderTexture(*m_Texture, m_TextureWorldPosition.x, m_TextureWorldPosition.y);
 	}
 }
 void TextComponent::SetText(const std::string& text)
@@ -54,4 +56,9 @@ void TextComponent::SetText(const std::string& text)
 const std::shared_ptr<Texture2D>& TextComponent::GetTexture() const
 {
 	return m_Texture;
+}
+
+void TextComponent::SetPivot(glm::vec3 newPivot)
+{
+	m_TexturePivot = newPivot;
 }

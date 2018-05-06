@@ -15,6 +15,12 @@ public:
 	void MoveLeft(float deltaTime);
 	void MoveRight(float deltaTime);
 
+	enum class MovementState
+	{
+		idle ,up, down, left, right
+	};
+
 private:
 	float m_Speed;
+	MovementState m_MovementState;
 };
