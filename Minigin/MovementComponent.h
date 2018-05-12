@@ -1,5 +1,14 @@
 #pragma once
 #include "ComponentBase.h"
+#include <vector>
+#include <SDL_rect.h>
+
+struct Grid
+{
+	bool isObstacle;
+	SDL_Rect rect;
+	std::vector<std::weak_ptr<Grid>> adjGrids;
+};
 
 class MovementComponent : public ComponentBase
 {
@@ -14,13 +23,18 @@ public:
 	void MoveDown(float deltaTime);
 	void MoveLeft(float deltaTime);
 	void MoveRight(float deltaTime);
+	void SetCurrentGrid(std::shared_ptr<Grid> pGrid);
 
 	enum class MovementState
 	{
 		idle ,up, down, left, right
 	};
 
+
+
 private:
 	float m_Speed;
 	MovementState m_MovementState;
+	std::shared_ptr<Grid> m_pCurrentGrid;
+	SDL_Rect m_CollisionBox;
 };

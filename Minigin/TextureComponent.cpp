@@ -25,6 +25,7 @@ void TextureComponent::Update(float deltaTime)
 }
 void TextureComponent::Render() const
 {
+	
 	if (m_pTexture)
 	{
 		Renderer::GetInstance().RenderTexture(*m_pTexture, m_TextureWorldPosition.x - m_TexturePivot.x, m_TextureWorldPosition.y - m_TexturePivot.x);

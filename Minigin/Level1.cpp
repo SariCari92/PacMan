@@ -13,22 +13,27 @@
 
 Level1::Level1()
 	:dae::Scene("Level1")
-	, m_WallThickness{ 10 }, m_PathWidth{ 35 }, m_GridSize{ 30 }, m_RowNr{ 20 }, m_ColNr{20}
+	, m_GridSize{ 30 }, m_RowNr{ 20 }, m_ColNr{20}
 {
-	InitializePacMan();
-	InitializeObstacles();
+	InitializeLevel();
 }
 Level1::~Level1()
 {
 
 }
 
+void Level1::InitializeLevel()
+{
+	InitializeObstacles();
+	InitializePacMan();
+}
 void Level1::Update(float deltaTime)
 {
 
 }
 void Level1::Render() const
 {
+	//Render Obstacles
 	SDL_Renderer *renderer = Renderer::GetInstance().GetSDLRenderer();
 	SDL_SetRenderDrawColor(renderer, 0, 0, 156, SDL_ALPHA_OPAQUE);
 
@@ -36,10 +41,9 @@ void Level1::Render() const
 	{
 		for (int col{ 0 }; col < m_ColNr; ++col)
 		{
-			if (m_ObstaclesFlag[row][col])
+			if (m_Grids[row][col]->isObstacle)
 			{
-				//SDL_RenderDrawRect(renderer, &m_Obstacles[row][col]);
-				SDL_RenderFillRect(renderer, &m_Obstacles[row][col]);
+				SDL_RenderFillRect(renderer, &(m_Grids[row][col]->rect));
 			}
 		}
 	}
@@ -50,88 +54,147 @@ void Level1::InitializePacMan()
 	m_pPacMan = std::make_shared<dae::SceneObject>();
 	//Texture
 	std::shared_ptr<TextureComponent> pPacManTexture = std::make_shared<TextureComponent>("PacMan.png");
-	pPacManTexture->SetPivot(glm::vec3{12.0f, 12.0f, 0.0f});
 	m_pPacMan->AddComponent(pPacManTexture);
 	Add(m_pPacMan);
-	m_pPacMan->GetTransform()->Translate((float)m_GridSize, (float)m_GridSize, 0.0f);
 	//Input
 	m_pPacMan->AddComponent(std::shared_ptr<InputComponent>(new InputComponentPacMan(0)));
+	//Set Grid Info
+	int initRow{ 1 };
+	int initCol{ 1 };
+	m_pPacMan->GetTransform()->Translate((float)m_Grids[initRow][initCol]->rect.x, (float)m_Grids[initRow][initCol]->rect.y, 0.0f);
 	//MovementComponent
-	m_pPacMan->AddComponent(std::make_shared<MovementComponent>());
-	//PhysicsComponent
-	m_pPacMan->AddComponent(std::make_shared<PhysicsComponent>());
-	m_pPacMan->GetComponent<PhysicsComponent>()->SetCollisionBox(CreateSDLRectangle(0, 0, 25, 25));
+	std::shared_ptr<MovementComponent> movComp = std::make_shared<MovementComponent>();
+	movComp->SetCurrentGrid(m_Grids[initRow][initCol]);
+	m_pPacMan->AddComponent(movComp);
+
+
 }
 
 
 void Level1::InitializeObstacles()
 {
-	int initPosX{ m_GridSize / 2 };
-	int initPosy{ m_GridSize / 2 };
+	//Initialize Grids -> Rects
+	for (int row{ 0 }; row < m_RowNr; ++row)
+	{
+		m_Grids.push_back(std::vector<std::shared_ptr<Grid>>());
+		m_Grids[row].reserve(m_ColNr);
+		for (int col{ 0 }; col < m_ColNr; ++col)
+		{
+			//Grid pGrid{};
+			//pGrid.rect = CreateSDLRectangle(col * m_GridSize, row * m_GridSize, m_GridSize, m_GridSize);
+			std::shared_ptr<Grid> pGrid = std::make_shared<Grid>();
+			pGrid->rect = CreateSDLRectangle(col * m_GridSize, row * m_GridSize, m_GridSize, m_GridSize);
+			m_Grids[row].push_back(pGrid);
+		}
+	}
+	//Initialize Grids -> Adjacent Grids
+	for (int row{ 0 }; row < m_RowNr; ++row)
+		for (int col{ 0 }; col < m_ColNr; ++col)
+		{
+			std::shared_ptr<Grid> currGrid = m_Grids[row][col];
+			currGrid->adjGrids.resize(9);
+			currGrid->adjGrids[4] = m_Grids[row][col];
 
-	//Initialize Rects
-	for (int row{ 0 }; row < m_RowNr; ++row)
-	{
-		m_Obstacles.push_back(std::vector<SDL_Rect>());
-		m_Obstacles[row].reserve(m_ColNr);
-		for (int col{ 0 }; col < m_ColNr; ++col)
-		{
-			SDL_Rect rect = CreateSDLRectangle(initPosX + col * m_GridSize - m_GridSize / 2, initPosy + row * m_GridSize - m_GridSize / 2, m_GridSize, m_GridSize);
-			m_Obstacles[row].push_back(rect);
+			if (row != 0)
+			{
+				currGrid->adjGrids[1] = m_Grids[row - 1][col];
+				if (col != 0)
+				{
+					currGrid->adjGrids[0] = m_Grids[row - 1][col - 1];
+				}
+				if (col != m_ColNr - 1)
+				{
+					currGrid->adjGrids[2] = m_Grids[row - 1][col + 1];
+				}
+			}
+
+			if (row != m_RowNr - 1)
+			{
+				currGrid->adjGrids[7] = m_Grids[row + 1][col];
+				if (col != 0)
+				{
+					currGrid->adjGrids[6] = m_Grids[row + 1][col - 1];
+				}
+				if (col != m_ColNr - 1)
+				{
+					currGrid->adjGrids[8] = m_Grids[row + 1][col + 1];
+				}
+			}
+
+			if (col != 0)
+			{
+				currGrid->adjGrids[3] = m_Grids[row][col - 1];
+				if (row != 0)
+				{
+					currGrid->adjGrids[0] = m_Grids[row - 1][col - 1];
+				}
+				if (row != m_RowNr - 1)
+				{
+					currGrid->adjGrids[6] = m_Grids[row + 1][col - 1];
+				}
+			}
+			if (col != m_ColNr - 1)
+			{
+				currGrid->adjGrids[5] = m_Grids[row][col + 1];
+				if (row != 0)
+				{
+					currGrid->adjGrids[2] = m_Grids[row - 1][col + 1];
+				}
+				if (row != m_RowNr - 1)
+				{
+					currGrid->adjGrids[8] = m_Grids[row + 1][col + 1];
+				}
+			}
+
+
+
 		}
-	}
-	//Initialize Flag
-	for (int row{ 0 }; row < m_RowNr; ++row)
-	{
-		m_ObstaclesFlag.push_back(std::vector<bool>());
-		m_ObstaclesFlag[row].reserve(m_ColNr);
-		for (int col{ 0 }; col < m_ColNr; ++col)
-		{
-			m_ObstaclesFlag[row].push_back(true);
-		}
-	}
+	//Initialize Grids -> Is Obstacle
+	for(int row{0}; row < m_RowNr; ++row)
+		for(int col{0}; col <m_ColNr; ++col)
+			m_Grids[row][col]->isObstacle = true;
 	//Specify Flags(Generate Map by setting Flags)
 	//Long Rows
 	for (int col{ 1 }; col < m_ColNr - 1; ++col)
-		m_ObstaclesFlag[1][col] = false;
+		m_Grids[1][col]->isObstacle = false;
 	for (int col{ 1 }; col < m_ColNr - 1; ++col)
-		m_ObstaclesFlag[4][col] = false;
+		m_Grids[4][col]->isObstacle = false;
 	for (int col{ 6 }; col < 14 ; ++col)
-		m_ObstaclesFlag[7][col] = false;
+		m_Grids[7][col]->isObstacle = false;
 	for (int col{ 8 }; col < 12; ++col)
-		m_ObstaclesFlag[9][col] = false;
+		m_Grids[9][col]->isObstacle = false;
 	for (int col{ 1 }; col < m_ColNr - 1; ++col)
-		m_ObstaclesFlag[16][col] = false;
+		m_Grids[16][col]->isObstacle = false;
 	for (int col{ 4 }; col < 16; ++col)
-		m_ObstaclesFlag[11][col] = false;
+		m_Grids[11][col]->isObstacle = false;
 	for (int col{ 8 }; col < 12; ++col)
-		m_ObstaclesFlag[12][col] = false;
+		m_Grids[12][col]->isObstacle = false;
 	for (int col{ 6 }; col < 14; ++col)
-		m_ObstaclesFlag[14][col] = false;
+		m_Grids[14][col]->isObstacle = false;
 	for (int col{ 1 }; col < m_ColNr - 1; ++col)
-		m_ObstaclesFlag[18][col] = false;
+		m_Grids[18][col]->isObstacle = false;
 	//Long Columns
 	for (int row{ 1 }; row < m_RowNr - 1; ++row)
-		m_ObstaclesFlag[row][1] = false;
+		m_Grids[row][1]->isObstacle = false;
 	for (int row{ 1 }; row < 17; ++row)
-		m_ObstaclesFlag[row][4] = false;
+		m_Grids[row][4]->isObstacle = false;
 	for (int row{ 6 }; row < 17; ++row)
-		m_ObstaclesFlag[row][6] = false;
+		m_Grids[row][6]->isObstacle = false;
 	for (int row{ 1 }; row < 10; ++row)
-		m_ObstaclesFlag[row][9] = false;
+		m_Grids[row][9]->isObstacle = false;
 	for (int row{ 1 }; row < 10; ++row)
-		m_ObstaclesFlag[row][10] = false;
+		m_Grids[row][10]->isObstacle = false;
 	for (int row{ 6 }; row < 17; ++row)
-		m_ObstaclesFlag[row][13] = false;
+		m_Grids[row][13]->isObstacle = false;
 	for (int row{ 1 }; row < 17; ++row)
-		m_ObstaclesFlag[row][15] = false;
+		m_Grids[row][15]->isObstacle = false;
 	for (int row{ 1 }; row < m_RowNr - 1; ++row)
-		m_ObstaclesFlag[row][18] = false;
+		m_Grids[row][18]->isObstacle = false;
 	//Details
 	for (int col{ 2 }; col < 4; ++col)
-		m_ObstaclesFlag[10][col] = false;
+		m_Grids[10][col]->isObstacle = false;
 	for (int col{ 16 }; col < 18; ++col)
-		m_ObstaclesFlag[10][col] = false;
+		m_Grids[10][col]->isObstacle = false;
 	for (int col{ 9 }; col < 11; ++col)
-		m_ObstaclesFlag[13][col] = false;
+		m_Grids[13][col]->isObstacle = false;
 }

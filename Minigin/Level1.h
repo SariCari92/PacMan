@@ -7,6 +7,8 @@ namespace dae
 	class SceneObject;
 }
 
+struct Grid;
+
 class Level1 final : public dae::Scene
 {
 public:
@@ -15,18 +17,15 @@ public:
 	void Update(float deltaTime) override;
 	void Render() const override;
 private:
+	void InitializeLevel();
 	void InitializePacMan();
 	void InitializeObstacles();
 private:
 	std::shared_ptr<dae::SceneObject> m_pPacMan;
-	std::vector<std::shared_ptr<dae::SceneObject>> m_Walls;
-	int m_WallThickness;
-	int m_PathWidth;
 
 	//Grid System
 	int m_RowNr;
 	int m_ColNr;
-	std::vector<std::vector<bool>> m_ObstaclesFlag;
-	std::vector<std::vector<SDL_Rect>> m_Obstacles;
+	std::vector<std::vector<std::shared_ptr<Grid>>> m_Grids;
 	int m_GridSize;
 };

@@ -15,11 +15,11 @@ void DrawRectangle(int x, int y, int width, int height, SDL_Color color)
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderDrawRect(renderer, &rect);
 }
-void DrawRectangle(const SDL_Rect &pRect, SDL_Color color)
+void DrawRectangle(const SDL_Rect *pRect, SDL_Color color)
 {
 	const auto &renderer = dae::Renderer::GetInstance().GetSDLRenderer();
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderDrawRect(renderer, &pRect);
+	SDL_RenderDrawRect(renderer, pRect);
 }
 
 void DrawFilledRectangle(int x, int y, int width, int height, SDL_Color color)
@@ -34,11 +34,11 @@ void DrawFilledRectangle(int x, int y, int width, int height, SDL_Color color)
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderFillRect(renderer, &rect);
 }
-void DrawFilledRectangle(const SDL_Rect &pRect, SDL_Color color)
+void DrawFilledRectangle(const SDL_Rect *pRect, SDL_Color color)
 {
 	const auto &renderer = dae::Renderer::GetInstance().GetSDLRenderer();
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(renderer, &pRect);
+	SDL_RenderFillRect(renderer, pRect);
 }
 
 SDL_Color CreateSDLColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
