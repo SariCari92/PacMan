@@ -8,6 +8,7 @@ struct Grid
 	bool isObstacle;
 	SDL_Rect rect;
 	std::vector<std::weak_ptr<Grid>> adjGrids;
+	std::unique_ptr<SDL_Rect> point;
 };
 
 class MovementComponent : public ComponentBase
