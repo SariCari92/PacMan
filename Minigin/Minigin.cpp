@@ -14,7 +14,7 @@
 #include "Level1.h"
 
 int dae::Minigin::m_WindowWidth = 600;
-int dae::Minigin::m_WindowHeight = 600;
+int dae::Minigin::m_WindowHeight = 630;
 
 void dae::Minigin::Initialize()
 {

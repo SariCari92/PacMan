@@ -23,9 +23,10 @@ private:
 private:
 	std::shared_ptr<dae::SceneObject> m_pPacMan;
 
-	//Grid System
 	int m_RowNr;
 	int m_ColNr;
 	std::vector<std::vector<std::shared_ptr<Grid>>> m_Grids;
 	int m_GridSize;
+
+	std::shared_ptr<dae::SceneObject> m_pScoreTextObject;
 };

@@ -212,3 +212,13 @@ void MovementComponent::SetCurrentGrid(std::shared_ptr<Grid> pGrid)
 	m_pCurrentGrid = pGrid;
 	m_CollisionBox = pGrid->rect;
 }
+
+std::shared_ptr<Grid> MovementComponent::GetCurrentGrid() const
+{
+	return m_pCurrentGrid;
+}
+
+const SDL_Rect& MovementComponent::GetCollisionBox() const
+{
+	return m_CollisionBox;
+}

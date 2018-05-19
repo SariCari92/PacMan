@@ -115,6 +115,9 @@
     <ClInclude Include="PhysicsComponent.h">
       <Filter>Game\PacMan</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Game\PacMan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -193,6 +196,9 @@
       <Filter>Engine\Helper</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsComponent.cpp">
+      <Filter>Game\PacMan</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
       <Filter>Game\PacMan</Filter>
     </ClCompile>
   </ItemGroup>

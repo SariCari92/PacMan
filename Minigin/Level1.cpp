@@ -10,10 +10,12 @@
 #include "Helper.h"
 #include "Minigin.h"
 #include "PhysicsComponent.h"
+#include "TextComponent.h"
+#include "ScoreComponent.h"
 
 Level1::Level1()
 	:dae::Scene("Level1")
-	, m_GridSize{ 30 }, m_RowNr{ 20 }, m_ColNr{20}
+	, m_GridSize{ 30 }, m_RowNr{ 20 }, m_ColNr{ 20 }, m_pScoreTextObject{nullptr}
 {
 	InitializeLevel();
 }
@@ -29,7 +31,9 @@ void Level1::InitializeLevel()
 }
 void Level1::Update(float deltaTime)
 {
-
+	std::string score{ "Score: " };
+	score += std::to_string(m_pPacMan->GetComponent<ScoreComponent>()->GetScore());
+	m_pScoreTextObject->GetComponent<TextComponent>()->SetText(score);
 }
 void Level1::Render() const
 {
@@ -67,6 +71,13 @@ void Level1::InitializePacMan()
 	std::shared_ptr<MovementComponent> movComp = std::make_shared<MovementComponent>();
 	movComp->SetCurrentGrid(m_Grids[initRow][initCol]);
 	m_pPacMan->AddComponent(movComp);
+	//Score Component
+	m_pPacMan->AddComponent(std::make_shared<ScoreComponent>());
+	//Initialize Score Text
+	m_pScoreTextObject = std::make_shared<dae::SceneObject>();
+	m_pScoreTextObject->AddComponent(std::make_shared<TextComponent>("Score: ", std::make_shared<Font>("../Data/Lingua.otf", 32)));
+	m_pScoreTextObject->GetTransform()->Translate(dae::Minigin::GetSDL_WindowWidth() - 150.0f, dae::Minigin::GetSDL_WindowHeight() - 30.0f, 0.0f);
+	Add(m_pScoreTextObject);
 }
 
 

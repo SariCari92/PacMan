@@ -25,6 +25,8 @@ public:
 	void MoveLeft(float deltaTime);
 	void MoveRight(float deltaTime);
 	void SetCurrentGrid(std::shared_ptr<Grid> pGrid);
+	std::shared_ptr<Grid> GetCurrentGrid() const;
+	const SDL_Rect& GetCollisionBox() const;
 
 	enum class MovementState
 	{
