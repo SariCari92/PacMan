@@ -46,20 +46,17 @@ void Level1::Update(float deltaTime)
 		break;
 	case Level1::LevelState::play:
 	{
-		SetPacManScores();
-		CheckAndSetSuperModeState();
+		UpdatePacManScores();
+		CheckAndUpdateSuperModeState();
 		CheckCollisionPacManAndGhosts();
 		break;
 	}
-	case Level1::LevelState::pause:
-		SetPacManScores();
-		break;
 	case Level1::LevelState::pacmanDead:
 		m_LevelState = LevelState::play;
 		break;
 	case Level1::LevelState::superMode:
-		SetPacManScores();
-		CheckAndSetSuperModeState();
+		UpdatePacManScores();
+		CheckAndUpdateSuperModeState();
 		CheckCollisionPacManAndGhosts();
 		break;
 	case Level1::LevelState::gameOver:
@@ -532,7 +529,7 @@ void Level1::CheckCollisionPacManAndGhosts()
 	}	
 }
 
-void Level1::SetPacManScores()
+void Level1::UpdatePacManScores()
 {
 	std::string PacManScore1{ "Score: " };
 	PacManScore1 += std::to_string(m_PacMans[0]->GetComponent<HealthAndScoreComponent>()->GetScore());
@@ -546,18 +543,33 @@ void Level1::SetPacManScores()
 	}
 }
 
-void Level1::CheckAndSetSuperModeState()
+void Level1::CheckAndUpdateSuperModeState()
 {
 	for (std::shared_ptr<dae::SceneObject> pPacman : m_PacMans)
 	{
 		if (pPacman->GetComponent<HealthAndScoreComponent>()->GetIsSuperMode())
 		{
-			m_LevelState = LevelState::superMode;
-			return;
+			if (m_LevelState != LevelState::superMode)//This is to avoid setting textures every frame. One time is sufficient
+			{
+				m_LevelState = LevelState::superMode;
+				m_pBlinky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+				m_pClyde->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+				m_pInky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+				m_pPinky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+				return;
+			}
 		}
 		else
 		{
-			m_LevelState = LevelState::play;
+			if (m_LevelState != LevelState::play)//This is to avoid setting textures every frame. One time is sufficient
+			{
+				m_LevelState = LevelState::play;
+				m_pBlinky->GetComponent<TextureComponent>()->SetTexture("../Data/Blinky.png");
+				m_pClyde->GetComponent<TextureComponent>()->SetTexture("../Data/Clyde.png");
+				m_pInky->GetComponent<TextureComponent>()->SetTexture("../Data/Inky.png");
+				m_pPinky->GetComponent<TextureComponent>()->SetTexture("../Data/Pinky.png");
+				return;
+			}
 		}
 	}
 }

@@ -5,7 +5,7 @@
 #include "Renderer.h"
 
 MovementComponent::MovementComponent()
-	:m_Speed{ 150.0f }, m_MovementState{ MovementState::idle }
+	:m_Speed{ 150.0f }, m_MovementState{ MovementState::idle }, m_IsDebugRender{true}
 {
 
 }
@@ -140,10 +140,13 @@ void MovementComponent::Update(float deltaTime)
 }
 void MovementComponent::Render() const
 {
-	DrawRectangle(&m_CollisionBox, CreateSDLColor(255, 0, 0, 255));
-	for (std::weak_ptr<Grid> pGrid : m_pCurrentGrid->adjGrids)
+	if (m_IsDebugRender)
 	{
-		if(pGrid.lock())DrawRectangle(&pGrid.lock()->rect, CreateSDLColor(0, 255, 0, 255));
+		DrawRectangle(&m_CollisionBox, CreateSDLColor(255, 0, 0, 255));
+		for (std::weak_ptr<Grid> pGrid : m_pCurrentGrid->adjGrids)
+		{
+			if (pGrid.lock())DrawRectangle(&pGrid.lock()->rect, CreateSDLColor(0, 255, 0, 255));
+		}
 	}
 }
 

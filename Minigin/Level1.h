@@ -23,8 +23,8 @@ private:
 	void InitializeObstacles();
 	void CheckCollisionPacManAndGhosts();
 
-	void SetPacManScores();
-	void CheckAndSetSuperModeState();
+	void UpdatePacManScores();
+	void CheckAndUpdateSuperModeState();
 	void RespawnGhost(std::shared_ptr<dae::SceneObject> ghost);
 private:
 	//Pacman(s)
@@ -47,7 +47,6 @@ private:
 	{
 		start,
 		play,
-		pause,
 		pacmanDead,
 		superMode,
 		gameOver

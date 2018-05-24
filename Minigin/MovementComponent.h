@@ -41,4 +41,5 @@ private:
 	MovementState m_MovementState;
 	std::shared_ptr<Grid> m_pCurrentGrid;
 	SDL_Rect m_CollisionBox;
+	bool m_IsDebugRender;
 };

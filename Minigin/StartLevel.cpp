@@ -160,11 +160,11 @@ void StartLevel::InitializeOptions()
 void StartLevel::InitializeButtonConfiguration()
 {
 	auto &inputMan = InputManager::GetInstance();
-
+	//Initialize Buttons For Controller 1
 	inputMan.SetGamepadUpCommand(0, std::make_shared<MoveUpCommand>());
 	inputMan.SetGamepadDownCommand(0, std::make_shared<MoveDownCommand>());
 	inputMan.SetGamepadACommand(0, std::make_shared<SelectCommand>());
-
+	//Initialize Buttons For Controller 2
 	inputMan.SetGamepadUpCommand(1, std::make_shared<MoveUpCommand>());
 	inputMan.SetGamepadDownCommand(1, std::make_shared<MoveDownCommand>());
 	inputMan.SetGamepadACommand(1, std::make_shared<SelectCommand>());
