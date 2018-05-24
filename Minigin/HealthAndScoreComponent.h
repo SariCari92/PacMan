@@ -1,5 +1,6 @@
 #pragma once
 #include "ComponentBase.h"
+#include "PacManGhostState.h"
 
 class HealthAndScoreComponent final: public ComponentBase
 {
@@ -13,7 +14,11 @@ public:
 	int GetScore() const;
 	void DecrementLives();
 	int GetLives() const;
+	bool GetIsSuperMode() const;
 private:
 	int m_Score;
 	int m_Lives;
+	bool m_IsSuperMode;
+	float m_SuperModeTimer;
+	float m_SuperModeTimerLeft;
 };

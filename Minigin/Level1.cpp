@@ -42,31 +42,25 @@ void Level1::Update(float deltaTime)
 	switch (m_LevelState)
 	{
 	case Level1::LevelState::start:
-		//m_LevelStartTimerLeft -= deltaTime;
-		//if(m_LevelStartTimerLeft <= 0.0f)
-			m_LevelState = LevelState::play;
+		m_LevelState = LevelState::play;
 		break;
 	case Level1::LevelState::play:
 	{
-		std::string PacManScore1{ "Score: " };
-		PacManScore1 += std::to_string(m_PacMans[0]->GetComponent<HealthAndScoreComponent>()->GetScore());
-		m_ScoreTextObjects[0]->GetComponent<TextComponent>()->SetText(PacManScore1);
-
-		if (m_PacMans.size() == 2)
-		{
-			std::string PacManScore2{ "Score: " };
-			PacManScore2 += std::to_string(m_PacMans[1]->GetComponent<HealthAndScoreComponent>()->GetScore());
-			m_ScoreTextObjects[1]->GetComponent<TextComponent>()->SetText(PacManScore2);
-		}
-
+		SetPacManScores();
+		CheckAndSetSuperModeState();
 		CheckCollisionPacManAndGhosts();
 		break;
 	}
 	case Level1::LevelState::pause:
+		SetPacManScores();
 		break;
 	case Level1::LevelState::pacmanDead:
-
 		m_LevelState = LevelState::play;
+		break;
+	case Level1::LevelState::superMode:
+		SetPacManScores();
+		CheckAndSetSuperModeState();
+		CheckCollisionPacManAndGhosts();
 		break;
 	case Level1::LevelState::gameOver:
 		break;
@@ -461,51 +455,120 @@ void Level1::InitializeObstacles()
 
 void Level1::CheckCollisionPacManAndGhosts()
 {
-	bool isCollision{ false };
-
-	for (std::shared_ptr<dae::SceneObject> pPacman : m_PacMans)
+	if (m_LevelState == LevelState::superMode)
 	{
-		SDL_Rect pacmanCollBox = pPacman->GetComponent<MovementComponent>()->GetCollisionBox();
-		if (SDL_HasIntersection(&m_pBlinky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+		for (std::shared_ptr<dae::SceneObject> pPacman : m_PacMans)
 		{
-			pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
-			m_LevelState = LevelState::pacmanDead;
-			isCollision = true;
-		}
-		else if (SDL_HasIntersection(&m_pClyde->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
-		{
-			pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
-			m_LevelState = LevelState::pacmanDead;
-			isCollision = true;
-		}
-		else if (SDL_HasIntersection(&m_pInky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
-		{
-			pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
-			m_LevelState = LevelState::pacmanDead;
-			isCollision = true;
-		}
-		else if (SDL_HasIntersection(&m_pPinky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
-		{
-			pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
-			m_LevelState = LevelState::pacmanDead;
-			isCollision = true;
-		}
-
-		if (pPacman->GetComponent<HealthAndScoreComponent>()->GetScore() == 0)
-		{
-			m_LevelState = LevelState::gameOver;
-			return;
-		}
-
-		if (isCollision)
-		{
-			auto rect = m_Grids[10][1]->rect;
-			pPacman->GetTransform()->SetWorldPosition(glm::vec3((float)rect.x, (float)rect.y, 0.0f));
-			std::shared_ptr<MovementComponent> movComp = pPacman->GetComponent<MovementComponent>();
-			movComp->SetCollisionBox(m_Grids[10][1]->rect);
-			movComp->SetCurrentGrid(m_Grids[10][1]);
-			movComp->SetMovementState(MovementComponent::MovementState::idle);
+			SDL_Rect pacmanCollBox = pPacman->GetComponent<MovementComponent>()->GetCollisionBox();
+			if (SDL_HasIntersection(&m_pBlinky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->IncrementScore(10);
+				RespawnGhost(m_pBlinky);
+			}
+			else if (SDL_HasIntersection(&m_pClyde->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->IncrementScore(10);
+				RespawnGhost(m_pClyde);
+			}
+			else if (SDL_HasIntersection(&m_pInky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->IncrementScore(10);
+				RespawnGhost(m_pInky);
+			}
+			else if (SDL_HasIntersection(&m_pPinky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->IncrementScore(10);
+				RespawnGhost(m_pPinky);
+			}
 		}
 	}
-	
+	else
+	{
+		bool isCollision{ false };
+		for (std::shared_ptr<dae::SceneObject> pPacman : m_PacMans)
+		{
+			SDL_Rect pacmanCollBox = pPacman->GetComponent<MovementComponent>()->GetCollisionBox();
+			if (SDL_HasIntersection(&m_pBlinky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
+				m_LevelState = LevelState::pacmanDead;
+				isCollision = true;
+			}
+			else if (SDL_HasIntersection(&m_pClyde->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
+				m_LevelState = LevelState::pacmanDead;
+				isCollision = true;
+			}
+			else if (SDL_HasIntersection(&m_pInky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
+				m_LevelState = LevelState::pacmanDead;
+				isCollision = true;
+			}
+			else if (SDL_HasIntersection(&m_pPinky->GetComponent<MovementComponent>()->GetCollisionBox(), &pacmanCollBox))
+			{
+				pPacman->GetComponent<HealthAndScoreComponent>()->DecrementLives();
+				m_LevelState = LevelState::pacmanDead;
+				isCollision = true;
+			}
+
+			if (pPacman->GetComponent<HealthAndScoreComponent>()->GetScore() == 0)
+			{
+				m_LevelState = LevelState::gameOver;
+				return;
+			}
+
+			if (isCollision)
+			{
+				auto rect = m_Grids[10][1]->rect;
+				pPacman->GetTransform()->SetWorldPosition(glm::vec3((float)rect.x, (float)rect.y, 0.0f));
+				std::shared_ptr<MovementComponent> movComp = pPacman->GetComponent<MovementComponent>();
+				movComp->SetCollisionBox(m_Grids[10][1]->rect);
+				movComp->SetCurrentGrid(m_Grids[10][1]);
+				movComp->SetMovementState(MovementComponent::MovementState::idle);
+			}
+		}
+	}	
+}
+
+void Level1::SetPacManScores()
+{
+	std::string PacManScore1{ "Score: " };
+	PacManScore1 += std::to_string(m_PacMans[0]->GetComponent<HealthAndScoreComponent>()->GetScore());
+	m_ScoreTextObjects[0]->GetComponent<TextComponent>()->SetText(PacManScore1);
+
+	if (m_PacMans.size() == 2)
+	{
+		std::string PacManScore2{ "Score: " };
+		PacManScore2 += std::to_string(m_PacMans[1]->GetComponent<HealthAndScoreComponent>()->GetScore());
+		m_ScoreTextObjects[1]->GetComponent<TextComponent>()->SetText(PacManScore2);
+	}
+}
+
+void Level1::CheckAndSetSuperModeState()
+{
+	for (std::shared_ptr<dae::SceneObject> pPacman : m_PacMans)
+	{
+		if (pPacman->GetComponent<HealthAndScoreComponent>()->GetIsSuperMode())
+		{
+			m_LevelState = LevelState::superMode;
+			return;
+		}
+		else
+		{
+			m_LevelState = LevelState::play;
+		}
+	}
+}
+
+void Level1::RespawnGhost(std::shared_ptr<dae::SceneObject> ghost)
+{
+	std::shared_ptr<Grid> respawnGrid = m_Grids[9][10];
+	SDL_Rect respawnRect = respawnGrid->rect;
+	ghost->GetTransform()->SetWorldPosition(glm::vec3{ respawnRect.x, respawnRect.y, 0.0f });
+	std::shared_ptr<MovementComponent> movComp = ghost->GetComponent<MovementComponent>();
+	movComp->SetCollisionBox(respawnRect);
+	movComp->SetCurrentGrid(respawnGrid);
+	movComp->SetMovementState(MovementComponent::MovementState::idle);
 }

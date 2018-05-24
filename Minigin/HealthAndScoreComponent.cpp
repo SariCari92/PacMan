@@ -4,7 +4,7 @@
 #include "MovementComponent.h"
 
 HealthAndScoreComponent::HealthAndScoreComponent()
-	:m_Score{0}, m_Lives{3}
+	:m_Score{ 0 }, m_Lives{ 3 }, m_IsSuperMode{}, m_SuperModeTimer{7.0f}, m_SuperModeTimerLeft{ 7.0f }
 {
 
 }
@@ -26,6 +26,17 @@ void HealthAndScoreComponent::Update(float deltaTime)
 		{
 			m_pOwner->GetComponent<MovementComponent>()->GetCurrentGrid()->adjGrids[gridIdx].lock()->specialPoint.reset();
 			m_Score += 3;
+			m_IsSuperMode = true;		
+		}
+	}
+
+	if (m_IsSuperMode)
+	{
+		m_SuperModeTimerLeft -= deltaTime;
+		if (m_SuperModeTimerLeft <= 0.0f)
+		{
+			m_SuperModeTimerLeft = m_SuperModeTimer;
+			m_IsSuperMode = false;
 		}
 	}
 }
@@ -48,4 +59,8 @@ void HealthAndScoreComponent::DecrementLives()
 int HealthAndScoreComponent::GetLives() const
 {
 	return m_Lives;
+}
+bool HealthAndScoreComponent::GetIsSuperMode() const
+{
+	return m_IsSuperMode;
 }

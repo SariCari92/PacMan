@@ -11,6 +11,7 @@ dae::Scene::~Scene() = default;
 void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 {
 	m_Objects.push_back(object);
+	object->SetScene(this);
 }
 
 void dae::Scene::BaseUpdate(float deltaTime)

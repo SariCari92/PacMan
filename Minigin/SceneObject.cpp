@@ -4,7 +4,7 @@
 
 dae::SceneObject::SceneObject()
 	:m_pTransformComponent{ std::make_shared<TransformComponent>()}
-	,m_pParent{nullptr}, m_IsOnThread{true}
+	,m_pParent{nullptr}, m_IsOnThread{true}, m_pScene{nullptr}
 {
 	m_pTransformComponent->SetOwner(this);
 }
@@ -84,4 +84,14 @@ std::vector<std::shared_ptr<dae::SceneObject>>& dae::SceneObject::GetChildren()
 dae::SceneObject* dae::SceneObject::GetParent() const
 {
 	return m_pParent;
+}
+
+void dae::SceneObject::SetScene(dae::Scene *scene)
+{
+	m_pScene = &*scene;
+}
+
+dae::Scene* dae::SceneObject::GetScene() const
+{
+	return m_pScene;
 }

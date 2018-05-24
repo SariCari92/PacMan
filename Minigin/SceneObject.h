@@ -2,6 +2,7 @@
 #include "ComponentBase.h"
 #include "TransformComponent.h"
 #include <typeinfo>
+#include "Scene.h"
 
 namespace dae
 {
@@ -20,12 +21,15 @@ namespace dae
 		void AddChild(std::shared_ptr<SceneObject> pChild);
 		std::vector<std::shared_ptr<SceneObject>>& GetChildren() ;
 		SceneObject* GetParent() const;
+		void SetScene(dae::Scene *scene);
+		dae::Scene* GetScene() const;
 
 	protected:
 		std::vector<std::shared_ptr<SceneObject>> m_Children;
 		std::vector<std::shared_ptr<ComponentBase>> m_Components;
 		std::shared_ptr<TransformComponent> m_pTransformComponent;
 		SceneObject *m_pParent;
+		dae::Scene *m_pScene;
 		bool m_IsOnThread;
 
 	private:
