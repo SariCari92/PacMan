@@ -1,17 +1,19 @@
 #pragma once
 #include "ComponentBase.h"
 
-class ScoreComponent final: public ComponentBase
+class HealthAndScoreComponent final: public ComponentBase
 {
 public:
-	ScoreComponent();
-	~ScoreComponent();
+	HealthAndScoreComponent();
+	~HealthAndScoreComponent();
 
 	void Update(float deltaTime) override;
 	void Render() const override;
 	void IncrementScore(int scoreToAdd);
 	int GetScore() const;
+	void DecrementLives();
+	int GetLives() const;
 private:
 	int m_Score;
-
+	int m_Lives;
 };

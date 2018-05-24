@@ -27,3 +27,7 @@ class MoveRightCommand final : public Command
 {
 	void Execute(dae::SceneObject *pObject, float deltaTime) override;
 };
+class SelectCommand final : public Command
+{
+	void Execute(dae::SceneObject *pObject, float deltaTime) override {};
+};

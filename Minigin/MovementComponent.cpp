@@ -222,3 +222,13 @@ const SDL_Rect& MovementComponent::GetCollisionBox() const
 {
 	return m_CollisionBox;
 }
+
+void MovementComponent::SetCollisionBox(SDL_Rect& box)
+{
+	m_CollisionBox = box;
+}
+
+void MovementComponent::SetMovementState(MovementState state)
+{
+	m_MovementState = state;
+}

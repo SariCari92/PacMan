@@ -7,3 +7,11 @@ enum class PacManState
 	supermode,
 	dead
 };
+
+enum class GhostState
+{
+	idle,
+	move,
+	scared,
+	dead
+};

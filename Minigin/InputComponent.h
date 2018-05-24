@@ -15,6 +15,8 @@ public:
 	void Render() const override;
 	void SetControllerId(int idx);
 protected:
+	virtual void LateUpdate() = 0;
+protected:
 	std::shared_ptr<Command> GetCommand() const;
 	int m_ControllerId;
 };

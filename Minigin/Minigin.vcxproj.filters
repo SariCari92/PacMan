@@ -11,9 +11,6 @@
     <Filter Include="Engine">
       <UniqueIdentifier>{09bf590e-b896-41aa-9b47-08357a890767}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\PacMan">
-      <UniqueIdentifier>{4c0d9efb-9e7a-4883-8d87-c4158f96b4b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Levels">
       <UniqueIdentifier>{50d3a92a-0a89-4552-bd50-ebf9b093ef65}</UniqueIdentifier>
     </Filter>
@@ -28,6 +25,9 @@
     </Filter>
     <Filter Include="Engine\Main">
       <UniqueIdentifier>{75385e52-2fdd-49dc-ba02-622b60c4c540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\PacMan&amp;Ghost">
+      <UniqueIdentifier>{4c0d9efb-9e7a-4883-8d87-c4158f96b4b5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -59,19 +59,13 @@
       <Filter>Game\Levels</Filter>
     </ClInclude>
     <ClInclude Include="MovementComponent.h">
-      <Filter>Game\PacMan</Filter>
-    </ClInclude>
-    <ClInclude Include="Commands.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="PacManState.h">
-      <Filter>Game\PacMan</Filter>
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClInclude>
     <ClInclude Include="InputComponent.h">
       <Filter>Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="InputComponentPacman.h">
-      <Filter>Game\PacMan</Filter>
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClInclude>
     <ClInclude Include="BaseCommand.h">
       <Filter>Engine\Main</Filter>
@@ -112,11 +106,26 @@
     <ClInclude Include="Helper.h">
       <Filter>Engine\Helper</Filter>
     </ClInclude>
-    <ClInclude Include="PhysicsComponent.h">
-      <Filter>Game\PacMan</Filter>
+    <ClInclude Include="HealthAndScoreComponent.h">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Game\PacMan</Filter>
+    <ClInclude Include="Commands.h">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadWrapper.h">
+      <Filter>Engine\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostAIComponent.h">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="StartLevel.h">
+      <Filter>Game\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
+    </ClInclude>
+    <ClInclude Include="PacManGhostState.h">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,16 +157,13 @@
       <Filter>Game\Levels</Filter>
     </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
-      <Filter>Game\PacMan</Filter>
-    </ClCompile>
-    <ClCompile Include="Commands.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClCompile>
     <ClCompile Include="InputComponent.cpp">
       <Filter>Engine\Components</Filter>
     </ClCompile>
     <ClCompile Include="InputComponentPacman.cpp">
-      <Filter>Game\PacMan</Filter>
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClCompile>
     <ClCompile Include="BaseCommand.cpp">
       <Filter>Engine\Main</Filter>
@@ -195,11 +201,20 @@
     <ClCompile Include="Helper.cpp">
       <Filter>Engine\Helper</Filter>
     </ClCompile>
-    <ClCompile Include="PhysicsComponent.cpp">
-      <Filter>Game\PacMan</Filter>
+    <ClCompile Include="HealthAndScoreComponent.cpp">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Game\PacMan</Filter>
+    <ClCompile Include="Commands.cpp">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostAIComponent.cpp">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
+    </ClCompile>
+    <ClCompile Include="StartLevel.cpp">
+      <Filter>Game\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>Game\PacMan&amp;Ghost</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

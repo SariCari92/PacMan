@@ -23,8 +23,8 @@ namespace dae
 		virtual void Update(float deltaTime);
 		virtual void Render() const;
 
-		std::string mName{};
-		std::vector < std::shared_ptr<SceneObject>> mObjects{};
+		std::string m_Name{};
+		std::vector < std::shared_ptr<SceneObject>> m_Objects{};
 
 		static unsigned int idCounter; 
 	};

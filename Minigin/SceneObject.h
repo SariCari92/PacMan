@@ -26,6 +26,7 @@ namespace dae
 		std::vector<std::shared_ptr<ComponentBase>> m_Components;
 		std::shared_ptr<TransformComponent> m_pTransformComponent;
 		SceneObject *m_pParent;
+		bool m_IsOnThread;
 
 	private:
 		SceneObject(const SceneObject& other) = delete;
@@ -40,7 +41,7 @@ std::shared_ptr<T> dae::SceneObject::GetComponent() const
 {
 	for (std::shared_ptr<ComponentBase> component : m_Components)
 	{
-		const type_info& typeId = typeid(T) ;
+		const type_info& typeId = typeid(T);
 		if (typeId == typeid(*component))
 		{
 			return std::static_pointer_cast<T>(component);

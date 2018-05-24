@@ -4,18 +4,18 @@
 
 unsigned int dae::Scene::idCounter = 0;
 
-dae::Scene::Scene(const std::string& name) : mName(name) {}
+dae::Scene::Scene(const std::string& name) : m_Name(name) {}
 
 dae::Scene::~Scene() = default;
 
 void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 {
-	mObjects.push_back(object);
+	m_Objects.push_back(object);
 }
 
 void dae::Scene::BaseUpdate(float deltaTime)
 {
-	for(auto gameObject : mObjects)
+	for(auto gameObject : m_Objects)
 	{
 		gameObject->Update(deltaTime);
 	}
@@ -25,7 +25,7 @@ void dae::Scene::BaseUpdate(float deltaTime)
 
 void dae::Scene::BaseRender() const
 {
-	for (const auto gameObject : mObjects)
+	for (const auto gameObject : m_Objects)
 	{
 		gameObject->Render();
 	}

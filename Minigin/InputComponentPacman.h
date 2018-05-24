@@ -7,7 +7,7 @@ public:
 	InputComponentPacMan();
 	InputComponentPacMan(int controllerId);
 	~InputComponentPacMan();
-	void Update(float deltaTime) override;
+	void LateUpdate() override;
 private:
 	void InitializeCommandConfiguration();
 };

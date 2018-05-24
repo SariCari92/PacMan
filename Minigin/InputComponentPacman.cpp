@@ -16,14 +16,9 @@ InputComponentPacMan::~InputComponentPacMan()
 {
 
 }
-void InputComponentPacMan::Update(float deltaTime)
+void InputComponentPacMan::LateUpdate()
 {
-	std::shared_ptr<Command> command = GetCommand();
 
-	if (command)
-	{
-		command->Execute(m_pOwner, deltaTime);
-	}
 }
 void InputComponentPacMan::InitializeCommandConfiguration()
 {

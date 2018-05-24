@@ -8,8 +8,10 @@ Controller::Controller(int idx)
 	, m_pGamepadDown{ nullptr }
 	, m_pGamepadLeft{ nullptr }
 	, m_pGamepadRight{ nullptr }
+	, m_pGamePadA{ nullptr }
 {
 	ZeroMemory(&m_InputState, sizeof(XINPUT_STATE));
+	ZeroMemory(&m_PrevInputState, sizeof(XINPUT_STATE));
 }
 Controller::~Controller()
 {
@@ -18,6 +20,7 @@ Controller::~Controller()
 
 void Controller::Update()
 {
+	m_PrevInputState = m_InputState;
 	DWORD result{};
 	result = XInputGetState(m_ControllerID, &m_InputState);
 	result == ERROR_SUCCESS ? m_IsActive = true : m_IsActive = false;
@@ -34,9 +37,4 @@ bool Controller::GetIsActive() const
 XINPUT_STATE Controller::GetXInputState() const
 {
 	return m_InputState;
-}
-
-void Controller::SetGamepadUpCommand(std::shared_ptr<Command> pCommand)
-{
-	
 }

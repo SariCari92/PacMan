@@ -1,5 +1,7 @@
 #pragma once
 #include "Singleton.h"
+#include <map>
+#include <string>
 
 namespace dae
 {
@@ -11,6 +13,7 @@ namespace dae
 		void Render();
 		void AddScene(std::shared_ptr<Scene> pScene);
 		void SetActiveScene(std::shared_ptr<Scene> pActiveScene);
+		std::shared_ptr<Scene> GetActiveScene() const;
 
 	private:
 		std::vector<std::shared_ptr<Scene>> m_Scenes;

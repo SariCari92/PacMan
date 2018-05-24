@@ -9,11 +9,17 @@ struct Grid
 	SDL_Rect rect;
 	std::vector<std::weak_ptr<Grid>> adjGrids;
 	std::unique_ptr<SDL_Rect> point;
+	std::unique_ptr<SDL_Rect> specialPoint;
 };
 
 class MovementComponent : public ComponentBase
 {
 public:
+	enum class MovementState
+	{
+		idle, up, down, left, right
+	};
+
 	MovementComponent();
 	~MovementComponent();
 
@@ -27,13 +33,8 @@ public:
 	void SetCurrentGrid(std::shared_ptr<Grid> pGrid);
 	std::shared_ptr<Grid> GetCurrentGrid() const;
 	const SDL_Rect& GetCollisionBox() const;
-
-	enum class MovementState
-	{
-		idle ,up, down, left, right
-	};
-
-
+	void SetCollisionBox(SDL_Rect& box);
+	void SetMovementState(MovementState state);
 
 private:
 	float m_Speed;
