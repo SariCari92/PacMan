@@ -1,10 +1,8 @@
 #pragma once
 #include "Singleton.h"
 #include "Controller.h"
-#include <map>
 #include <vector>
 #include "BaseCommand.h"
-
 
 class InputManager : public dae::Singleton<InputManager>
 {
@@ -29,7 +27,6 @@ public:
 	void SetGamepadACommand(int controllerId, std::shared_ptr<Command> pConcreteCommand);
 private:
 	//Commands
-
 	std::vector<Controller> m_Controllers;
 };
 

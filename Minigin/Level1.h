@@ -21,10 +21,11 @@ private:
 	void InitializePacMan();
 	void InitializeGhosts();
 	void InitializeObstacles();
-	void CheckCollisionPacManAndGhosts();
 
+	void CheckCollisionPacManAndGhosts();
 	void UpdatePacManScores();
-	void CheckAndUpdateSuperModeState();
+	void CheckPlayToSuperMode();
+	void CheckSuperModeToPlay();
 	void RespawnGhost(std::shared_ptr<dae::SceneObject> ghost);
 private:
 	//Pacman(s)

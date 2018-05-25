@@ -27,6 +27,8 @@ void InputComponent::Update(float deltaTime)
 	{
 		command->Execute(m_pOwner, deltaTime);
 	}
+
+	LateUpdate(deltaTime, command);
 }
 
 void InputComponent::Render() const

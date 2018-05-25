@@ -47,7 +47,7 @@ void Level1::Update(float deltaTime)
 	case Level1::LevelState::play:
 	{
 		UpdatePacManScores();
-		CheckAndUpdateSuperModeState();
+		CheckPlayToSuperMode();
 		CheckCollisionPacManAndGhosts();
 		break;
 	}
@@ -56,7 +56,7 @@ void Level1::Update(float deltaTime)
 		break;
 	case Level1::LevelState::superMode:
 		UpdatePacManScores();
-		CheckAndUpdateSuperModeState();
+		CheckSuperModeToPlay();
 		CheckCollisionPacManAndGhosts();
 		break;
 	case Level1::LevelState::gameOver:
@@ -543,35 +543,36 @@ void Level1::UpdatePacManScores()
 	}
 }
 
-void Level1::CheckAndUpdateSuperModeState()
+void Level1::CheckPlayToSuperMode()
 {
 	for (std::shared_ptr<dae::SceneObject> pPacman : m_PacMans)
 	{
 		if (pPacman->GetComponent<HealthAndScoreComponent>()->GetIsSuperMode())
 		{
-			if (m_LevelState != LevelState::superMode)//This is to avoid setting textures every frame. One time is sufficient
-			{
-				m_LevelState = LevelState::superMode;
-				m_pBlinky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
-				m_pClyde->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
-				m_pInky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
-				m_pPinky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
-				return;
-			}
-		}
-		else
-		{
-			if (m_LevelState != LevelState::play)//This is to avoid setting textures every frame. One time is sufficient
-			{
-				m_LevelState = LevelState::play;
-				m_pBlinky->GetComponent<TextureComponent>()->SetTexture("../Data/Blinky.png");
-				m_pClyde->GetComponent<TextureComponent>()->SetTexture("../Data/Clyde.png");
-				m_pInky->GetComponent<TextureComponent>()->SetTexture("../Data/Inky.png");
-				m_pPinky->GetComponent<TextureComponent>()->SetTexture("../Data/Pinky.png");
-				return;
-			}
+			m_LevelState = LevelState::superMode;
+			m_pBlinky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+			m_pClyde->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+			m_pInky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+			m_pPinky->GetComponent<TextureComponent>()->SetTexture("../Data/ScaredGhost.png");
+			return;
 		}
 	}
+}
+
+void Level1::CheckSuperModeToPlay()
+{
+	for (std::shared_ptr<dae::SceneObject> pPacman : m_PacMans)//This is to avoid setting textures every frame. One time is sufficient
+	{
+		if (pPacman->GetComponent<HealthAndScoreComponent>()->GetIsSuperMode())
+		{
+			return;
+		}
+	}
+	m_LevelState = LevelState::play;
+	m_pBlinky->GetComponent<TextureComponent>()->SetTexture("../Data/Blinky.png");
+	m_pClyde->GetComponent<TextureComponent>()->SetTexture("../Data/Clyde.png");
+	m_pInky->GetComponent<TextureComponent>()->SetTexture("../Data/Inky.png");
+	m_pPinky->GetComponent<TextureComponent>()->SetTexture("../Data/Pinky.png");
 }
 
 void Level1::RespawnGhost(std::shared_ptr<dae::SceneObject> ghost)

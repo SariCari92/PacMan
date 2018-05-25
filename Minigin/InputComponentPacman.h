@@ -7,7 +7,7 @@ public:
 	InputComponentPacMan();
 	InputComponentPacMan(int controllerId);
 	~InputComponentPacMan();
-	void LateUpdate() override;
+	void LateUpdate(float deltaTime, std::shared_ptr<Command> controllerCommand) override;
 private:
 	void InitializeCommandConfiguration();
 };
