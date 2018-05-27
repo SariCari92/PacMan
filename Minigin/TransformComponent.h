@@ -1,6 +1,7 @@
 #pragma once
 #include "ComponentBase.h"
 #include "Structs.h"
+#include <glm\vec3.hpp>
 
 namespace dae
 {
@@ -13,14 +14,17 @@ public:
 	TransformComponent();
 	~TransformComponent();
 
-	void SetWorldPosition(const Float3 newPos);
-	Float3 GetWorldPosition() const;
-	void SetRelativePosition(const Float3 newPos);
-	Float3 GetRelativePosition() const;
+	void SetWorldPosition(const glm::vec3 newPos);
+	glm::vec3 GetWorldPosition() const;
+	void SetRelativePosition(const glm::vec3 newPos);
+	glm::vec3 GetRelativePosition() const;
 	void Translate(float x, float y, float z);
-	void SetOwner(std::unique_ptr<dae::SceneObject>& pOwner);
+	void Translate(glm::vec3 translation);
+	void SetOwner(dae::SceneObject *pOwner);
 private:
-	Float3 m_RelativePosition;
-	Float3 m_WorldPosition;
-	std::unique_ptr<dae::SceneObject> m_pOwner;
+
+	glm::vec3 m_RelativePosition;
+	glm::vec3 m_WorldPosition;
+
+	dae::SceneObject *m_pOwner;
 };

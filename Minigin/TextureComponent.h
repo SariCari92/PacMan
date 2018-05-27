@@ -3,6 +3,7 @@
 #include "Texture2D.h"
 #include <memory>
 #include "Structs.h"
+#include <glm\vec3.hpp>
 
 using namespace dae;
 
@@ -13,17 +14,14 @@ public:
 	TextureComponent(std::string texture);
 	~TextureComponent();
 
-	void Update() override;
+	void Update(float deltaTime) override;
 	void Render() const override;
-	void SetWorldPosition(Float3 newPos);
-	Float3 GetWorldPosition() const;
-	void SetRelativePosition(Float3 newPos);
-	Float3 GetRelativePosition() const;
+
 	void SetTexture(std::string texture);
 	const std::shared_ptr<Texture2D> GetTexture() const;
-	void SetOwner(std::unique_ptr<dae::SceneObject> pOwner) override;
+	void SetPivot(glm::vec3 newPivot);
 private:
 	std::shared_ptr<Texture2D> m_pTexture;
-	Float3 m_WorldPosition;
-	Float3 m_RelativePosition;
+	glm::vec3 m_TextureWorldPosition;
+	glm::vec3 m_TexturePivot; //Position Relative to WorldPosition
 };

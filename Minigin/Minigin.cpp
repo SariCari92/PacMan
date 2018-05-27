@@ -11,7 +11,11 @@
 #include "TextureComponent.h"
 #include "TextComponent.h"
 #include "SceneObject.h"
+#include "Level1.h"
+#include "StartLevel.h"
 
+int dae::Minigin::m_WindowWidth = 600;
+int dae::Minigin::m_WindowHeight = 630;
 
 void dae::Minigin::Initialize()
 {
@@ -21,11 +25,11 @@ void dae::Minigin::Initialize()
 	}
 
 	window = SDL_CreateWindow(
-		"Programming 4 assignment",
+		"Programming 4 - End Assignment: PacMan",
 		SDL_WINDOWPOS_UNDEFINED,
 		SDL_WINDOWPOS_UNDEFINED,
-		640,
-		480,
+		m_WindowWidth,
+		m_WindowHeight,
 		SDL_WINDOW_OPENGL
 	);
 	if (window == nullptr) 
@@ -41,42 +45,14 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	std::shared_ptr<dae::Scene> startScene = std::shared_ptr<dae::Scene>(new StartLevel);
+	dae::SceneManager::GetInstance().AddScene(startScene);
+	dae::SceneManager::GetInstance().SetActiveScene(startScene);
 
-	//auto go = std::make_shared<GameObject>();
-	//go->SetTexture("background.jpg");
-	//scene.Add(go);
-
-	//go = std::make_shared<GameObject>();
-	//go->SetTexture("logo.png");
-	//go->SetPosition(216, 180);
-	//scene.Add(go);
-
-	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	//auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	//to->SetPosition(80, 20);
-	//scene.Add(to);
-
-	//========================================================================
-
-	std::shared_ptr<SceneObject> pSceneObject1 = std::make_shared<SceneObject>();
-	std::shared_ptr<TextureComponent> pTexture{std::make_shared<TextureComponent>("background.jpg")};
-	pSceneObject1->AddComponent(pTexture);
-
-	std::shared_ptr<SceneObject> pSceneObject2 = std::make_shared<SceneObject>();
-	std::shared_ptr<Font> font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	std::shared_ptr<TextComponent> pText{ std::make_shared<TextComponent>("Programming 4 Assignment", font) };
-	pSceneObject2->AddComponent(pText);
-	pSceneObject1->AddChild(pSceneObject2);
-
-	scene.Add(pSceneObject1);
-
-	pSceneObject1->GetTransform()->Translate(200.0f, 0.0f, 0.0f);
-
-	auto& inputManager = InputManager::GetInstance();
-	inputManager.AddInput("PressA", std::shared_ptr<Input>(std::make_shared<Input>(Input::PressedState::ButtonPressed, XINPUT_GAMEPAD_A)));
-
-
+	//std::shared_ptr<dae::Scene> playScene = std::shared_ptr<dae::Scene>(new Level1);
+	//dae::SceneManager::GetInstance().AddScene(playScene);
+	//dae::SceneManager::GetInstance().SetActiveScene(playScene);
+	
 }
 
 void dae::Minigin::Cleanup()
@@ -119,3 +95,12 @@ void dae::Minigin::Run()
 
 	Cleanup();
 }
+int dae::Minigin::GetSDL_WindowWidth()
+{
+	return m_WindowWidth;
+}
+int dae::Minigin::GetSDL_WindowHeight()
+{
+	return m_WindowHeight;
+}
+

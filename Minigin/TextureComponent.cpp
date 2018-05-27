@@ -6,7 +6,7 @@
 
 TextureComponent::TextureComponent()
 	:m_pTexture{ nullptr },
-	m_WorldPosition{}
+	m_TextureWorldPosition{}
 {
 
 }
@@ -16,36 +16,22 @@ TextureComponent::TextureComponent(std::string texture)
 }
 TextureComponent::~TextureComponent()
 {
-
+	std::cout << "TextureComponent Destructor Called!" << std::endl;
 }
 
-void TextureComponent::Update()
+void TextureComponent::Update(float deltaTime)
 {
-	if (m_pOwner) m_WorldPosition = m_pOwner->GetTransform()->GetWorldPosition() + m_RelativePosition;
+	if (m_pOwner) m_TextureWorldPosition = m_pOwner->GetTransform()->GetWorldPosition();
 }
 void TextureComponent::Render() const
 {
+	
 	if (m_pTexture)
 	{
-		Renderer::GetInstance().RenderTexture(*m_pTexture, m_WorldPosition.x, m_WorldPosition.y);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, m_TextureWorldPosition.x - m_TexturePivot.x, m_TextureWorldPosition.y - m_TexturePivot.x);
 	}
 }
-void TextureComponent::SetWorldPosition(Float3 newPos)
-{
-	m_WorldPosition = newPos;
-}
-Float3 TextureComponent::GetWorldPosition() const
-{
-	return m_WorldPosition;
-}
-void TextureComponent::SetRelativePosition(Float3 newPos)
-{
-	m_RelativePosition = newPos;
-}
-Float3 TextureComponent::GetRelativePosition() const
-{
-	return m_RelativePosition;
-}
+
 void TextureComponent::SetTexture(std::string texture)
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(texture);
@@ -55,8 +41,8 @@ const std::shared_ptr<Texture2D> TextureComponent::GetTexture() const
 {
 	return m_pTexture;
 }
-void TextureComponent::SetOwner(std::unique_ptr<dae::SceneObject> pOwner)
+
+void TextureComponent::SetPivot(glm::vec3 newPivot)
 {
-	m_pOwner = std::move(pOwner);
-	m_WorldPosition += m_pOwner->GetTransform()->GetWorldPosition();
+	m_TexturePivot = newPivot;
 }

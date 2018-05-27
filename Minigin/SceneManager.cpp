@@ -5,23 +5,32 @@
 
 void dae::SceneManager::Update(float deltaTime)
 {
-	for(auto scene : mScenes)
-	{
-		scene->Update(deltaTime);
-	}
+	//for(auto scene : m_Scenes)
+	//{
+	//	scene->BaseUpdate(deltaTime);
+	//}
+
+	if (m_pActiveScene) m_pActiveScene->BaseUpdate(deltaTime);
 }
 
 void dae::SceneManager::Render()
 {
-	for (const auto scene : mScenes)
-	{
-		scene->Render();
-	}
+	if (m_pActiveScene) m_pActiveScene->BaseRender();
 }
 
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
+void dae::SceneManager::AddScene(std::shared_ptr<Scene> pScene)
 {
-	const auto scene = std::shared_ptr<Scene>(new Scene(name));
-	mScenes.push_back(scene);
-	return *scene;
+	m_Scenes.push_back(pScene);
+}
+
+
+
+void dae::SceneManager::SetActiveScene(std::shared_ptr<Scene> pActiveScene)
+{
+	m_pActiveScene = pActiveScene;
+}
+
+std::shared_ptr<dae::Scene> dae::SceneManager::GetActiveScene() const
+{
+	return m_pActiveScene;
 }

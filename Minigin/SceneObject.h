@@ -1,8 +1,8 @@
 #pragma once
 #include "ComponentBase.h"
 #include "TransformComponent.h"
-#include "RenderComponent.h"
 #include <typeinfo>
+#include "Scene.h"
 
 namespace dae
 {
@@ -20,12 +20,17 @@ namespace dae
 		std::shared_ptr<TransformComponent> GetTransform() const;
 		void AddChild(std::shared_ptr<SceneObject> pChild);
 		std::vector<std::shared_ptr<SceneObject>>& GetChildren() ;
+		SceneObject* GetParent() const;
+		void SetScene(dae::Scene *scene);
+		dae::Scene* GetScene() const;
 
 	protected:
 		std::vector<std::shared_ptr<SceneObject>> m_Children;
 		std::vector<std::shared_ptr<ComponentBase>> m_Components;
 		std::shared_ptr<TransformComponent> m_pTransformComponent;
-		std::unique_ptr<SceneObject> m_pParent;
+		SceneObject *m_pParent;
+		dae::Scene *m_pScene;
+		bool m_IsOnThread;
 
 	private:
 		SceneObject(const SceneObject& other) = delete;
@@ -40,7 +45,7 @@ std::shared_ptr<T> dae::SceneObject::GetComponent() const
 {
 	for (std::shared_ptr<ComponentBase> component : m_Components)
 	{
-		const type_info& typeId = typeid(T) ;
+		const type_info& typeId = typeid(T);
 		if (typeId == typeid(*component))
 		{
 			return std::static_pointer_cast<T>(component);

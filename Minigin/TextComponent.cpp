@@ -3,26 +3,30 @@
 #include "Font.h"
 #include "Renderer.h"
 #include "SceneObject.h"
+#include "glm\vec4.hpp"
 
 TextComponent::TextComponent()
 {
 
 }
 TextComponent::TextComponent(const std::string& text, std::shared_ptr<Font> font)
-	:m_Text{ text }, m_Font{ font }, m_RelativePosition{}, m_WorldPosition{}
+	:m_Text{ text }, m_Font{ font }, m_TexturePivot{}, m_TextureWorldPosition{}
 {
 
 }
 TextComponent::~TextComponent()
 {
-
+	std::cout << "TextComponent Destructor Called!" << std::endl;
 }
 
-void TextComponent::Update() 
+void TextComponent::Update(float deltaTime)
 {
+	if (m_pOwner) m_TextureWorldPosition = m_pOwner->GetTransform()->GetWorldPosition() + m_TexturePivot;
+
 	if (m_NeedsUpdate)
 	{
-		const SDL_Color color = { 255,255,255 }; // only white text is supported now
+		//const SDL_Color color = { 255,255,255 }; // only white text is supported now
+		const SDL_Color color = { (Uint8)m_TextColor.r, (Uint8)m_TextColor.g , (Uint8)m_TextColor.b , (Uint8)m_TextColor.a };
 		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
 		if (surf == nullptr)
 		{
@@ -35,48 +39,35 @@ void TextComponent::Update()
 		}
 		SDL_FreeSurface(surf);
 		m_Texture = std::make_shared<Texture2D>(texture);
+		m_NeedsUpdate = false;
 	}
 
-	if(m_pOwner) m_WorldPosition = m_pOwner->GetTransform()->GetWorldPosition() + m_RelativePosition;
+	
 
 }
 void TextComponent::Render() const
 {
 	if (m_Texture != nullptr)
 	{
-		Renderer::GetInstance().RenderTexture(*m_Texture, m_WorldPosition.x, m_WorldPosition.y);
+		Renderer::GetInstance().RenderTexture(*m_Texture, m_TextureWorldPosition.x, m_TextureWorldPosition.y);
 	}
 }
 void TextComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 }
-void TextComponent::SetWorldPosition(float x, float y, float z)
-{
-	m_WorldPosition.x = x;
-	m_WorldPosition.y = y;
-	m_WorldPosition.z = z;
-}
-Float3 TextComponent::GetWorldPosition() const
-{
-	return m_WorldPosition;
-}
 const std::shared_ptr<Texture2D>& TextComponent::GetTexture() const
 {
 	return m_Texture;
 }
-void TextComponent::SetRelativePosition(float x, float y, float z)
+
+void TextComponent::SetPivot(glm::vec3 newPivot)
 {
-	m_RelativePosition.x += x;
-	m_RelativePosition.y += y;
-	m_RelativePosition.z += z;
+	m_TexturePivot = newPivot;
 }
-Float3 TextComponent::GetRelativePosition() const
+
+void TextComponent::SetTextColor(glm::vec4 color)
 {
-	return m_RelativePosition;
-}
-void TextComponent::SetOwner(std::unique_ptr<dae::SceneObject> pOwner)
-{
-	m_pOwner = std::move(pOwner);
-	m_WorldPosition += m_pOwner->GetTransform()->GetWorldPosition();
+	m_TextColor = color;
+	m_NeedsUpdate = true;
 }

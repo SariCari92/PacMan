@@ -1,0 +1,181 @@
+m_Walls.reserve(50);
+	int windowWidth = dae::Minigin::GetSDL_WindowWidth();
+	int windowHeight = dae::Minigin::GetSDL_WindowHeight();
+	int layerCount{ 0 };
+
+	//Layer 1
+	std::shared_ptr<dae::SceneObject> pWall = std::make_shared<dae::SceneObject>();
+	std::shared_ptr<PhysicsComponent> pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(0, 0, windowWidth, m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(0, 0, m_WallThickness, windowHeight));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(0, windowHeight - m_WallThickness, windowWidth, m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth - m_WallThickness, 0, m_WallThickness, windowHeight));
+	Add(pWall);
+
+	//Layer2
+	layerCount++;
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(m_WallThickness + m_PathWidth, m_WallThickness + m_PathWidth, m_WallThickness, windowHeight - 2*(m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth - 2 * m_WallThickness - m_PathWidth, m_WallThickness + m_PathWidth, m_WallThickness, windowHeight - 2 * (m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(m_WallThickness + m_PathWidth, m_WallThickness + m_PathWidth, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness ));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, m_WallThickness + m_PathWidth, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(m_WallThickness + m_PathWidth, windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	//Layer3
+	++layerCount;
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), layerCount * (m_WallThickness + m_PathWidth), m_WallThickness, windowHeight - 2 * layerCount * (m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, layerCount * (m_WallThickness + m_PathWidth), m_WallThickness, windowHeight - 2 * layerCount * (m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), layerCount * (m_WallThickness + m_PathWidth), windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, layerCount * (m_WallThickness + m_PathWidth), windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	//Layer4
+	++layerCount;
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), layerCount * (m_WallThickness + m_PathWidth), m_WallThickness, windowHeight - 2 * layerCount * (m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, layerCount * (m_WallThickness + m_PathWidth), m_WallThickness, windowHeight - 2 * layerCount * (m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), layerCount * (m_WallThickness + m_PathWidth), windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, layerCount * (m_WallThickness + m_PathWidth), windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	//Layer5
+	++layerCount;
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), layerCount * (m_WallThickness + m_PathWidth), m_WallThickness, windowHeight - 2 * layerCount * (m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, layerCount * (m_WallThickness + m_PathWidth), m_WallThickness, windowHeight - 2 * layerCount * (m_WallThickness + m_PathWidth)));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), layerCount * (m_WallThickness + m_PathWidth), windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, layerCount * (m_WallThickness + m_PathWidth), windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(layerCount * (m_WallThickness + m_PathWidth), windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);
+
+	pWall = std::make_shared<dae::SceneObject>();
+	pPhys = std::make_shared<PhysicsComponent>();
+	pWall->AddComponent(pPhys);
+	pPhys->SetCollisionBox(CreateSDLRectangle(windowWidth / 2 + m_PathWidth / 2, windowHeight - layerCount * (m_WallThickness + m_PathWidth) - m_WallThickness, windowWidth / 2 - m_PathWidth / 2 - layerCount * (m_WallThickness + m_PathWidth), m_WallThickness));
+	Add(pWall);

@@ -1,36 +1,32 @@
 #pragma once
 #include "Singleton.h"
 #include "Controller.h"
-#include <map>
 #include <vector>
-
-struct Input
-{
-	enum class PressedState
-	{
-		ButtonPressed,
-		ButtonReleased,
-		ButtonDown
-	};
-
-	Input();
-	Input(PressedState state, int pressedButton);
-
-	PressedState pressedState;
-	int pressedButton;
-};
+#include "BaseCommand.h"
 
 class InputManager : public dae::Singleton<InputManager>
 {
 public:
+	enum class PressState
+	{
+		Down, 
+		Up, 
+		Pressed
+	};
+
 	InputManager();
-
 	bool ProcessInput();
-	void AddInput(const std::string &inputName, const std::shared_ptr<Input> input);
-	bool IsInputTriggered(int ControllerId, std::string inputName);
-
+	std::shared_ptr<Command> GetCommand(int controllerId) const;
+	std::shared_ptr<Command> GetCommand(int controllerId, PressState state) const;
+	
+	//Command Setting
+	void SetGamepadUpCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand);
+	void SetGamepadDownCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand);
+	void SetGamepadLeftCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand);
+	void SetGamepadRightCommand(int controllerId, std::shared_ptr<Command> pConcreteCommand);
+	void SetGamepadACommand(int controllerId, std::shared_ptr<Command> pConcreteCommand);
 private:
+	//Commands
 	std::vector<Controller> m_Controllers;
-	std::map<std::string, std::shared_ptr<Input>> m_Inputs;
 };
 
