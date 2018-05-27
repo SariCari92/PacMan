@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "Scene.h"
 #include "SceneObject.h"
+#include <algorithm>
 
 unsigned int dae::Scene::idCounter = 0;
 
@@ -12,6 +13,14 @@ void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 {
 	m_Objects.push_back(object);
 	object->SetScene(this);
+}
+
+void dae::Scene::Remove(std::shared_ptr<SceneObject>& object, bool isDelete)
+{
+	auto toDeleteIt = std::find(m_Objects.begin(), m_Objects.end(), object);
+	m_Objects.erase(toDeleteIt);
+	if(isDelete)
+		object.reset();
 }
 
 void dae::Scene::BaseUpdate(float deltaTime)

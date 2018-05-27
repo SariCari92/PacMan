@@ -26,22 +26,22 @@ void InputComponentPacMan::LateUpdate(float deltaTime, std::shared_ptr<Command> 
 		{
 		case 0:
 		{
-			if (GetAsyncKeyState(VK_LEFT))
+			if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 			{
 				std::shared_ptr<Command> command = std::make_shared<MoveLeftCommand>();
 				command->Execute(m_pOwner, deltaTime);
 			}
-			if (GetAsyncKeyState(VK_RIGHT))
+			if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 			{
 				std::shared_ptr<Command> command = std::make_shared<MoveRightCommand>();
 				command->Execute(m_pOwner, deltaTime);
 			}
-			if (GetAsyncKeyState(VK_UP))
+			if (GetAsyncKeyState(VK_UP) & 0x8000)
 			{
 				std::shared_ptr<Command> command = std::make_shared<MoveUpCommand>();
 				command->Execute(m_pOwner, deltaTime);
 			}
-			if (GetAsyncKeyState(VK_DOWN))
+			if (GetAsyncKeyState(VK_DOWN) & 0x8000)
 			{
 				std::shared_ptr<Command> command = std::make_shared<MoveDownCommand>();
 				command->Execute(m_pOwner, deltaTime);

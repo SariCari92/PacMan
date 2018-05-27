@@ -8,6 +8,7 @@
 #include "GameData.h"
 #include "SceneManager.h"
 #include "Level1.h"
+#include "InputComponentPacMan.h"
 
 StartLevel::StartLevel()
 	:Scene("StartLevel"), m_SelectionIdx{0}

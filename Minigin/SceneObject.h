@@ -30,7 +30,6 @@ namespace dae
 		std::shared_ptr<TransformComponent> m_pTransformComponent;
 		SceneObject *m_pParent;
 		dae::Scene *m_pScene;
-		bool m_IsOnThread;
 
 	private:
 		SceneObject(const SceneObject& other) = delete;

@@ -532,10 +532,12 @@ void Level1::CheckCollisionPacManAndGhosts()
 
 void Level1::UpdatePacManScores()
 {
+
 	std::string PacManScore1{ "Score: " };
 	PacManScore1 += std::to_string(m_PacMans[0]->GetComponent<HealthAndScoreComponent>()->GetScore());
 	m_ScoreTextObjects[0]->GetComponent<TextComponent>()->SetText(PacManScore1);
 	m_ScoreTextObjects[0]->GetComponent<TextComponent>()->SetTextColor(glm::vec4{ 255.0f, 0.0f, 0.0f, 255.0f });
+
 
 	if (m_PacMans.size() == 2)
 	{
@@ -543,6 +545,7 @@ void Level1::UpdatePacManScores()
 		PacManScore2 += std::to_string(m_PacMans[1]->GetComponent<HealthAndScoreComponent>()->GetScore());
 		m_ScoreTextObjects[1]->GetComponent<TextComponent>()->SetText(PacManScore2);
 		m_ScoreTextObjects[1]->GetComponent<TextComponent>()->SetTextColor(glm::vec4{ 255.0f, 0.0f, 0.0f, 255.0f });
+		
 	}
 }
 

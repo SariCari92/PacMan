@@ -11,8 +11,10 @@ namespace dae
 		~Scene();
 
 		void Add(const std::shared_ptr<SceneObject>& object);
+		void Remove(std::shared_ptr<SceneObject>& object, bool isDelete);
 		void BaseUpdate(float deltaTime);
 		void BaseRender() const;
+
 
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;

@@ -4,7 +4,7 @@
 
 dae::SceneObject::SceneObject()
 	:m_pTransformComponent{ std::make_shared<TransformComponent>()}
-	,m_pParent{nullptr}, m_IsOnThread{true}, m_pScene{nullptr}
+	,m_pParent{nullptr}, m_pScene{nullptr}
 {
 	m_pTransformComponent->SetOwner(this);
 }
@@ -25,29 +25,12 @@ void dae::SceneObject::Update(float deltaTime)
 	for (std::shared_ptr<ComponentBase> component : m_Components)
 	{
 		component->Update(deltaTime);
-		//if (m_IsOnThread)
-		//{
-		//	std::thread threadObj{ &ComponentBase::Update, &(*component), deltaTime };
-		//	ThreadWrapper thread{ threadObj };
-		//}
-		//else
-		//{
-		//	component->Update(deltaTime);
-		//}
 
 	}
 	for (std::shared_ptr<SceneObject> child : m_Children)
 	{
 		child->Update(deltaTime);
-		//if (m_IsOnThread)
-		//{
-		//	std::thread threadObj{ &SceneObject::Update, &(*child), deltaTime };
-		//	ThreadWrapper thread{ threadObj };
-		//}
-		//else
-		//{
-		//	child->Update(deltaTime);
-		//}
+
 	}
 }
 

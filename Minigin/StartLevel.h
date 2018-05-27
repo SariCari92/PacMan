@@ -25,5 +25,4 @@ private:
 	std::shared_ptr<dae::SceneObject> m_pSelectionIndicator;
 
 	int m_SelectionIdx;
-	
 };
