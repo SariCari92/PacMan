@@ -3,6 +3,7 @@
 #include "Font.h"
 #include "Renderer.h"
 #include "SceneObject.h"
+#include "glm\vec4.hpp"
 
 TextComponent::TextComponent()
 {
@@ -24,7 +25,8 @@ void TextComponent::Update(float deltaTime)
 
 	if (m_NeedsUpdate)
 	{
-		const SDL_Color color = { 255,255,255 }; // only white text is supported now
+		//const SDL_Color color = { 255,255,255 }; // only white text is supported now
+		const SDL_Color color = { (Uint8)m_TextColor.r, (Uint8)m_TextColor.g , (Uint8)m_TextColor.b , (Uint8)m_TextColor.a };
 		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
 		if (surf == nullptr)
 		{
@@ -37,6 +39,7 @@ void TextComponent::Update(float deltaTime)
 		}
 		SDL_FreeSurface(surf);
 		m_Texture = std::make_shared<Texture2D>(texture);
+		m_NeedsUpdate = false;
 	}
 
 	
@@ -61,4 +64,10 @@ const std::shared_ptr<Texture2D>& TextComponent::GetTexture() const
 void TextComponent::SetPivot(glm::vec3 newPivot)
 {
 	m_TexturePivot = newPivot;
+}
+
+void TextComponent::SetTextColor(glm::vec4 color)
+{
+	m_TextColor = color;
+	m_NeedsUpdate = true;
 }

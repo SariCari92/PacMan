@@ -129,7 +129,8 @@ void Level1::InitializePacMan()
 	Add(pPacMan);
 	//Initialize Score Text
 	m_ScoreTextObjects.push_back(std::make_shared<dae::SceneObject>());
-	m_ScoreTextObjects[0]->AddComponent(std::make_shared<TextComponent>("Score: ", std::make_shared<Font>("../Data/Lingua.otf", 32)));
+	std::shared_ptr<TextComponent> scoreTextComponent = std::make_shared<TextComponent>("Score: ", std::make_shared<Font>("../Data/Lingua.otf", 32));
+	m_ScoreTextObjects[0]->AddComponent(scoreTextComponent);
 	m_ScoreTextObjects[0]->GetTransform()->Translate(dae::Minigin::GetSDL_WindowWidth() - 150.0f, dae::Minigin::GetSDL_WindowHeight() - 30.0f, 0.0f);
 	Add(m_ScoreTextObjects[0]);
 
@@ -534,12 +535,14 @@ void Level1::UpdatePacManScores()
 	std::string PacManScore1{ "Score: " };
 	PacManScore1 += std::to_string(m_PacMans[0]->GetComponent<HealthAndScoreComponent>()->GetScore());
 	m_ScoreTextObjects[0]->GetComponent<TextComponent>()->SetText(PacManScore1);
+	m_ScoreTextObjects[0]->GetComponent<TextComponent>()->SetTextColor(glm::vec4{ 255.0f, 0.0f, 0.0f, 255.0f });
 
 	if (m_PacMans.size() == 2)
 	{
 		std::string PacManScore2{ "Score: " };
 		PacManScore2 += std::to_string(m_PacMans[1]->GetComponent<HealthAndScoreComponent>()->GetScore());
 		m_ScoreTextObjects[1]->GetComponent<TextComponent>()->SetText(PacManScore2);
+		m_ScoreTextObjects[1]->GetComponent<TextComponent>()->SetTextColor(glm::vec4{ 255.0f, 0.0f, 0.0f, 255.0f });
 	}
 }
 

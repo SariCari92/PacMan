@@ -134,18 +134,21 @@ void StartLevel::InitializeOptions()
 	//Selection
 	m_p1PlayerText = std::make_shared<dae::SceneObject>();
 	std::shared_ptr<TextComponent> textComp = std::make_shared<TextComponent>("1 Player", std::make_shared<Font>("../Data/Lingua.otf", 24));
+	textComp->SetTextColor(glm::vec4{255.0f, 0.0f, 0.0f, 255.0f});
 	m_p1PlayerText->AddComponent(textComp);
 	m_p1PlayerText->GetTransform()->Translate(150.0f, 200.0f, 0.0f);
 	Add(m_p1PlayerText);
 
 	m_p2PlayerPacManText = std::make_shared<dae::SceneObject>();
 	textComp = std::make_shared<TextComponent>("2 Player: 2x Pacman", std::make_shared<Font>("../Data/Lingua.otf", 24));
+	textComp->SetTextColor(glm::vec4{ 255.0f, 0.0f, 0.0f, 255.0f });
 	m_p2PlayerPacManText->AddComponent(textComp);
 	m_p2PlayerPacManText->GetTransform()->Translate(150.0f, 300.0f, 0.0f);
 	Add(m_p2PlayerPacManText);
 
 	m_p2PlayerTextPacManGhost = std::make_shared<dae::SceneObject>();
 	textComp = std::make_shared<TextComponent>("2 Player: Pacman And Ghost", std::make_shared<Font>("../Data/Lingua.otf", 24));
+	textComp->SetTextColor(glm::vec4{ 255.0f, 0.0f, 0.0f, 255.0f });
 	m_p2PlayerTextPacManGhost->AddComponent(textComp);
 	m_p2PlayerTextPacManGhost->GetTransform()->Translate(150.0f, 400.0f, 0.0f);
 	Add(m_p2PlayerTextPacManGhost);

@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "glm\vec4.hpp"
 
 namespace dae
 {
@@ -24,4 +25,5 @@ private:
 	std::shared_ptr<dae::SceneObject> m_pSelectionIndicator;
 
 	int m_SelectionIdx;
+	
 };
